@@ -118,3 +118,8 @@ def register_consep_v4_test():
     DatasetCatalog.register("consep_v4_test", consep_v4_test)
     MetadataCatalog.get("consep_v4_test").set(thing_classes=['cell'])
     
+
+register_consep_v1_train()
+
+# import torch
+# print(torch.__version__)

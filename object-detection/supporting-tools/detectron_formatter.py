@@ -97,8 +97,8 @@ if __name__ == '__main__':
     # making all possible permutations of three lower and upper bounds
     master_df = detectron_df.copy()
     main_arr = []
-    im_class = 'train'
-    version = 'v1'
+    im_class = 'test'
+    version = 'v4'
 
 
     for i in range(1,28):
