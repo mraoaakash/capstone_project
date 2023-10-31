@@ -20,7 +20,7 @@ detectron_df = pd.DataFrame(columns=['file_name','height', 'width','image_id','a
 
 def overlay(no_arr, im_class='train',version='v1'):
     try:
-        path_till_benchmark = ''
+        path_till_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/'
         det_copy = detectron_df.copy()
         im_class = im_class[1:]
         labelfile = f'benchmarking/datasets/CoNSeP/{version}/t{im_class}/labels_mat/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.mat'
