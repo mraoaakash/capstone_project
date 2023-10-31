@@ -81,7 +81,7 @@ def overlay(no_arr, im_class='train',version='v1'):
         # box_list = np.array(box_list)
 
         print(f'Done with {no_arr}')
-        det_copy['file_name'] = [path_till_benchmark + image_file]
+        det_copy['file_name'] = [image_file]
         det_copy['height'] = [im_height]
         det_copy['width'] = [im_width]
         det_copy['image_id'] = f't{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}'
@@ -96,19 +96,24 @@ if __name__ == '__main__':
     # making all possible permutations of three lower and upper bounds
     master_df = detectron_df.copy()
     main_arr = []
+    version = 'v1'
+
+
     for i in range(1,28):
         for j in range(0,4):
             for k in range(0,4):
                 no_arr = [i,j,k]
                 main_arr.append(no_arr)
-                df = overlay(no_arr)
+                df = overlay(no_arr,im_class='train',version=version)
+                master_df = pd.concat([master_df, df], ignore_index=True)
+                df = overlay(no_arr,im_class='test',version=version)
                 master_df = pd.concat([master_df, df], ignore_index=True)
     
     print(master_df)
     det_path = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/'
     if not os.path.exists(det_path):
         os.makedirs(det_path)
-    master_df.to_csv(det_path + 'detectron_df.csv', index=False)
+    master_df.to_csv(det_path + f'detectron_df_{version}.csv', index=False)
 
     # print(main_arr)
 
