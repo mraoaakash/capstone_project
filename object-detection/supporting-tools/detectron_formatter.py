@@ -18,14 +18,14 @@ base_dict = {
 }
 detectron_df = pd.DataFrame(columns=['file_name','height', 'width','image_id','annotations'])
 
+path_till_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
 def overlay(no_arr, im_class='train',version='v1'):
     try:
-        path_till_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/'
         det_copy = detectron_df.copy()
         im_class = im_class[1:]
-        labelfile = f'benchmarking/datasets/CoNSeP/{version}/t{im_class}/labels_mat/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.mat'
-        txt_file = f'benchmarking/datasets/CoNSeP/{version}/t{im_class}/labels/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.txt'
-        image_file = f'benchmarking/datasets/CoNSeP/{version}/t{im_class}/images/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.png'
+        labelfile = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/{version}/t{im_class}/labels_mat/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.mat'
+        txt_file = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/{version}/t{im_class}/labels/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.txt'
+        image_file = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/{version}/t{im_class}/images/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.png'
 
         # removing overlapping files if they exist
         if os.path.exists(txt_file):
@@ -105,7 +105,7 @@ if __name__ == '__main__':
                 master_df = pd.concat([master_df, df], ignore_index=True)
     
     print(master_df)
-    det_path = 'benchmarking/datasets/CoNSeP/detectron_format/'
+    det_path = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/'
     if not os.path.exists(det_path):
         os.makedirs(det_path)
     master_df.to_csv(det_path + 'detectron_df.csv', index=False)
