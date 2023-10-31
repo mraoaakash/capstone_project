@@ -90,7 +90,8 @@ def overlay(no_arr, im_class='train',version='v1'):
         # print(det_copy)
         return det_copy
     except:
-        print(f'Error in {labelfile}')
+        # print(f'Error in {labelfile}')
+        pass
 
 if __name__ == '__main__':
     # making all possible permutations of three lower and upper bounds
