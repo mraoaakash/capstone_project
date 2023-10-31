@@ -120,6 +120,13 @@ def register_consep_v4_test():
     
 
 register_consep_v1_train()
+register_consep_v1_test()
+register_consep_v2_train()
+register_consep_v2_test()
+register_consep_v3_train()
+register_consep_v3_test()
+register_consep_v4_train()
+register_consep_v4_test()
 
 # import torch
 # print(torch.__version__)
