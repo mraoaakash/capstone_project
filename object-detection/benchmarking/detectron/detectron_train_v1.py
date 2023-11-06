@@ -5,6 +5,7 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 import random
 from detectron2.utils.visualizer import Visualizer
 import cv2
+import matplotlib.pyplot as plt
 
 
 path_before_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
@@ -52,4 +53,7 @@ for d in random.sample(dataset_dicts, 3):
     vis = visualizer.draw_dataset_dict(d)
     # cv2.imshow(vis.get_image()[:, :, ::-1])
     # save the image
-    cv2.imwrite(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
+    plt.imsave(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
+    # cv2.imwrite(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
