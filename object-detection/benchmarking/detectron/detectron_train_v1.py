@@ -13,6 +13,8 @@ def consep_v1_train():
     df = pd.read_csv(data_path)
     df = df.dropna()
     df = df.reset_index(drop=True)
+    # changing type of "annotations" to list of dictionaries
+    df["annotations"] = df["annotations"].apply(lambda x: eval(x))
     # make df into a list of dictionaries
     df_list = df.to_dict('records')
     # print datatypes of each column
