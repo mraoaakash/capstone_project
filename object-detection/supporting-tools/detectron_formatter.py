@@ -67,8 +67,8 @@ def overlay(no_arr, im_class='test',version='v1'):
                     class_cont = class_cont.tolist()
                     class_cont = class_cont[0] - 1
 
-                    x_norm, y_norm, w_norm, h_norm = x/im_width, y/im_height, w/im_width, h/im_height
-                    bbox = [x_norm, y_norm, w_norm, h_norm]
+                    # x_norm, y_norm, w_norm, h_norm = x/im_width, y/im_height, w/im_width, h/im_height
+                    bbox = [x, y, w, h]
                     
                     # print(bbox)
                     # print(class_cont)
