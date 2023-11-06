@@ -15,6 +15,8 @@ def consep_v1_train():
     df = df.reset_index(drop=True)
     # make df into a list of dictionaries
     df_list = df.to_dict('records')
+    # print datatypes of each column
+    print(df.dtypes)
     # print(df_list[0])
     return df_list
 
