@@ -1,11 +1,22 @@
 import pandas as pd
 import numpy as np
 import os
-from detectron2.data import DatasetCatalog, MetadataCatalog
 import random
-from detectron2.utils.visualizer import Visualizer
 import cv2
 import matplotlib.pyplot as plt
+
+
+
+# import some common detectron2 utilities
+from detectron2 import model_zoo
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2.utils.visualizer import Visualizer
+from detectron2.data import MetadataCatalog
+from detectron2.data.catalog import DatasetCatalog
+from detectron2.engine import DefaultTrainer
+
+
 
 
 path_before_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
@@ -44,6 +55,10 @@ MetadataCatalog.get("consep_v1_test").set(thing_classes=['other','inflammatory',
 my_dataset_train_metadata = MetadataCatalog.get("consep_v1_train")
 dataset_dicts = DatasetCatalog.get("consep_v1_train")
 
+
+
+
+
 print(len(dataset_dicts))
 if len(os.listdir(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/') ) != 0:
     print("Emptying train batch folder")
@@ -61,3 +76,23 @@ for d in random.sample(dataset_dicts, 3):
     # cv2.imwrite(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
+
+cfg = get_cfg()
+cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"))
+cfg.DATASETS.TRAIN = ("consep_v1_train",)
+cfg.DATASETS.TEST = ("consep_v1_test",)
+
+cfg.DATALOADER.NUM_WORKERS = 4
+cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml")  # Let training initialize from model zoo
+cfg.SOLVER.IMS_PER_BATCH = 4
+cfg.SOLVER.BASE_LR = 0.001
+
+cfg.SOLVER.WARMUP_ITERS = 1000
+cfg.SOLVER.MAX_ITER = 1500 #adjust up if val mAP is still rising, adjust down if overfit
+cfg.SOLVER.STEPS = (1000, 1500)
+cfg.SOLVER.GAMMA = 0.05
+
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE =8
+cfg.MODEL.ROI_HEADS.NUM_CLASSES = 8 #your number of classes + 1
+
+cfg.TEST.EVAL_PERIOD = 500
