@@ -47,6 +47,7 @@ dataset_dicts = DatasetCatalog.get("consep_v1_train")
 for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
     print(d["file_name"])
+    print(img.shape)
     visualizer = Visualizer(img[:, :, ::-1], metadata=my_dataset_train_metadata, scale=0.5)
     vis = visualizer.draw_dataset_dict(d)
     # cv2.imshow(vis.get_image()[:, :, ::-1])
