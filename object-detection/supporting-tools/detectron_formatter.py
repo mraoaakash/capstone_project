@@ -19,7 +19,7 @@ base_dict = {
 detectron_df = pd.DataFrame(columns=['file_name','height', 'width','image_id','annotations'])
 
 path_till_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
-def overlay(no_arr, im_class='train',version='v1'):
+def overlay(no_arr, im_class='test',version='v1'):
     try:
         det_copy = detectron_df.copy()
         im_class = im_class[1:]
