@@ -5,6 +5,9 @@ import random
 import cv2
 import matplotlib.pyplot as plt
 
+from comet_ml import Experiment
+from comet_ml.integration.pytorch import log_model
+
 
 
 # import some common detectron2 utilities
@@ -17,7 +20,11 @@ from detectron2.data.catalog import DatasetCatalog
 from detectron2.engine import DefaultTrainer
 
 
-
+experiment = Experiment(
+  api_key="AKIafKnSIJd2sEZkr8pUN3fnv",
+  project_name="faster-rcnn",
+  workspace="mraoaakash"
+)
 
 path_before_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
 def consep_v1_train():
@@ -96,3 +103,7 @@ cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE =8
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 8 #your number of classes + 1
 
 cfg.TEST.EVAL_PERIOD = 500
+
+# cfg to dict
+cfg_dict = cfg.dump()
+print(cfg_dict)
