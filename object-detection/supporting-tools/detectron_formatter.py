@@ -115,5 +115,5 @@ if __name__ == '__main__':
             det_path = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/'
             if not os.path.exists(det_path):
                 os.makedirs(det_path)
-            master_df.to_csv(det_path + f'detectron_df_{version}_{im_class}.csv', index=False)
+            master_df.to_csv(det_path + f'detectron_df_{a}_{b}.csv', index=False)
 
