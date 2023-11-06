@@ -109,12 +109,12 @@ os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 
 # cfg to dict
 hyper_params = cfg.dump()
+experiment.log_parameters(hyper_params)
 
 trainer = DefaultTrainer(cfg) 
 trainer.resume_or_load(resume=False)
 trainer.train()
 
 
-experiment.log_parameters(hyper_params)
 
 log_model(experiment, trainer, model_name="faster_rcnn_X_101_32x8d_FPN_3x")
