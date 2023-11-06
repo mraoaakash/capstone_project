@@ -112,11 +112,11 @@ def doer(a,b):
     master_df.to_csv(det_path + f'detectron_df_{a}_{b}.csv', index=False)
 
 doer('train','v1')
-# doer('train','v2')
-# doer('train','v3')
-# doer('train','v4')
+doer('train','v2')
+doer('train','v3')
+doer('train','v4')
 
-# doer('test','v1')
-# doer('test','v2')
-# doer('test','v3')
-# doer('test','v4')
+doer('test','v1')
+doer('test','v2')
+doer('test','v3')
+doer('test','v4')
