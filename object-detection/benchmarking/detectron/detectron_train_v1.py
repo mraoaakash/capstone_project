@@ -9,7 +9,7 @@ import cv2
 
 path_before_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
 def consep_v1_train():
-    data_path = f'{path_before_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/detectron_df_V1_train.csv'
+    data_path = f'{path_before_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/detectron_df_v1_train.csv'
     df = pd.read_csv(data_path)
     df = df.dropna()
     df = df.reset_index(drop=True)
@@ -19,7 +19,7 @@ def consep_v1_train():
     return df_list
 
 def consep_v1_test():
-    data_path = f'{path_before_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/detectron_df_V1_test.csv'
+    data_path = f'{path_before_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/detectron_df_v1_test.csv'
     df = pd.read_csv(data_path)
     df = df.dropna()
     df = df.reset_index(drop=True)
