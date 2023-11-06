@@ -45,6 +45,10 @@ my_dataset_train_metadata = MetadataCatalog.get("consep_v1_train")
 dataset_dicts = DatasetCatalog.get("consep_v1_train")
 
 print(len(dataset_dicts))
+if len(os.listdir(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/') ) != 0:
+    print("Emptying train batch folder")
+    os.system(f'rm {path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/*')
+    print("Done emptying train batch folder")
 for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
     print(d["file_name"])
