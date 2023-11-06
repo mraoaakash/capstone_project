@@ -89,7 +89,7 @@ cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_X_101_
 cfg.DATASETS.TRAIN = ("consep_v1_train",)
 cfg.DATASETS.TEST = ("consep_v1_test",)
 
-cfg.DATALOADER.NUM_WORKERS = 4
+cfg.DATALOADER.NUM_WORKERS = 2
 cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml")  # Let training initialize from model zoo
 cfg.SOLVER.IMS_PER_BATCH = 4
 cfg.SOLVER.BASE_LR = 0.001
@@ -104,6 +104,17 @@ cfg.MODEL.ROI_HEADS.NUM_CLASSES = 8 #your number of classes + 1
 
 cfg.TEST.EVAL_PERIOD = 500
 
+os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+
+
 # cfg to dict
-cfg_dict = cfg.dump()
-print(cfg_dict)
+hyper_params = cfg.dump()
+
+trainer = DefaultTrainer(cfg) 
+trainer.resume_or_load(resume=False)
+trainer.train()
+
+
+experiment.log_parameters(hyper_params)
+
+log_model(experiment, trainer, model_name="faster_rcnn_X_101_32x8d_FPN_3x")
