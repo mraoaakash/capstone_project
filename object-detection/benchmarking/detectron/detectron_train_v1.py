@@ -53,7 +53,7 @@ for d in random.sample(dataset_dicts, 3):
     vis = visualizer.draw_dataset_dict(d)
     # cv2.imshow(vis.get_image()[:, :, ::-1])
     # save the image
-    plt.imsave(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
+    plt.imsave(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{str(d["file_name"]).split("/")[-1]}', vis.get_image()[:, :, ::-1])
     # cv2.imwrite(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
