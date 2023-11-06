@@ -44,7 +44,7 @@ MetadataCatalog.get("consep_v1_test").set(thing_classes=['other','inflammatory',
 my_dataset_train_metadata = MetadataCatalog.get("consep_v1_train")
 dataset_dicts = DatasetCatalog.get("consep_v1_train")
 
-
+print(len(dataset_dicts))
 for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
     print(d["file_name"])
