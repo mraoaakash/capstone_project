@@ -94,9 +94,9 @@ cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_X_1
 cfg.SOLVER.IMS_PER_BATCH = 4
 cfg.SOLVER.BASE_LR = 0.001
 
-cfg.SOLVER.WARMUP_ITERS = 1000
-cfg.SOLVER.MAX_ITER = 1500 #adjust up if val mAP is still rising, adjust down if overfit
-cfg.SOLVER.STEPS = (1000, 1500)
+cfg.SOLVER.WARMUP_ITERS = 0
+cfg.SOLVER.MAX_ITER = 50 #adjust up if val mAP is still rising, adjust down if overfit
+cfg.SOLVER.STEPS = []
 cfg.SOLVER.GAMMA = 0.05
 
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE =8
