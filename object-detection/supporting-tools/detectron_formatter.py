@@ -93,7 +93,7 @@ def overlay(no_arr, im_class='test',version='v2'):
         # print(f'Error in {labelfile}')
         pass
 
-def doer(a,b)
+def doer(a,b):
     # making all possible permutations of three lower and upper bounds
     master_df = detectron_df.copy()
     main_arr = []
