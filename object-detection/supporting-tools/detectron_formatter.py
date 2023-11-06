@@ -19,7 +19,7 @@ base_dict = {
 detectron_df = pd.DataFrame(columns=['file_name','height', 'width','image_id','annotations'])
 
 path_till_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
-def overlay(no_arr, im_class='train',version='v2'):
+def overlay(no_arr, im_class='test',version='v2'):
     try:
         det_copy = detectron_df.copy()
         im_class = im_class[1:]
@@ -97,17 +97,19 @@ if __name__ == '__main__':
     # making all possible permutations of three lower and upper bounds
     master_df = detectron_df.copy()
     main_arr = []
-    im_class = 'train'
-    version = 'v1'
+    im_class = ['train','test']
+    version = ['v1','v2','v3','v4']
 
-
-    for i in range(1,28):
-        for j in range(0,4):
-            for k in range(0,4):
-                no_arr = [i,j,k]
-                main_arr.append(no_arr)
-                df = overlay(no_arr,im_class=im_class,version=version)
-                master_df = pd.concat([master_df, df], ignore_index=True)
+    for a in version:
+        for b in im_class:
+            print(a,b)
+            for i in range(1,28):
+                for j in range(0,4):
+                    for k in range(0,4):
+                        no_arr = [i,j,k]
+                        main_arr.append(no_arr)
+                        df = overlay(no_arr,im_class=im_class,version=version)
+                        master_df = pd.concat([master_df, df], ignore_index=True)
     
     print(master_df)
     det_path = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/'
