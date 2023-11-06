@@ -17,6 +17,7 @@ def consep_v1_train():
     df_list = df.to_dict('records')
     # print datatypes of each column
     print(df.dtypes)
+    print(type(df["annotations"][0]))
     # print(df_list[0])
     return df_list
 
