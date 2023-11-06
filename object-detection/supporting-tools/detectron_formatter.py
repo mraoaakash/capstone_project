@@ -93,27 +93,30 @@ def overlay(no_arr, im_class='test',version='v2'):
         # print(f'Error in {labelfile}')
         pass
 
-if __name__ == '__main__':
+def doer(a,b)
     # making all possible permutations of three lower and upper bounds
     master_df = detectron_df.copy()
     main_arr = []
-    im_class = ['train','test']
-    version = ['v1','v2','v3','v4']
+    for i in range(1,28):
+        for j in range(0,4):
+            for k in range(0,4):
+                no_arr = [i,j,k]
+                main_arr.append(no_arr)
+                df = overlay(no_arr,im_class=a,version=b)
+                master_df = pd.concat([master_df, df], ignore_index=True)
 
-    for a in version:
-        for b in im_class:
-            print(a,b)
-            for i in range(1,28):
-                for j in range(0,4):
-                    for k in range(0,4):
-                        no_arr = [i,j,k]
-                        main_arr.append(no_arr)
-                        df = overlay(no_arr,im_class=a,version=b)
-                        master_df = pd.concat([master_df, df], ignore_index=True)
-    
-            print(master_df)
-            det_path = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/'
-            if not os.path.exists(det_path):
-                os.makedirs(det_path)
-            master_df.to_csv(det_path + f'detectron_df_{a}_{b}.csv', index=False)
+    print(master_df)
+    det_path = f'{path_till_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/'
+    if not os.path.exists(det_path):
+        os.makedirs(det_path)
+    master_df.to_csv(det_path + f'detectron_df_{a}_{b}.csv', index=False)
 
+doer('train','v1')
+# doer('train','v2')
+# doer('train','v3')
+# doer('train','v4')
+
+# doer('test','v1')
+# doer('test','v2')
+# doer('test','v3')
+# doer('test','v4')
