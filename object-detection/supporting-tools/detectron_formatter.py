@@ -108,7 +108,7 @@ if __name__ == '__main__':
                     for k in range(0,4):
                         no_arr = [i,j,k]
                         main_arr.append(no_arr)
-                        df = overlay(no_arr,im_class=im_class,version=version)
+                        df = overlay(no_arr,im_class=a,version=b)
                         master_df = pd.concat([master_df, df], ignore_index=True)
     
             print(master_df)
