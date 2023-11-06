@@ -13,7 +13,7 @@ print(basepath)
 
 base_dict = {
     "bbox":[],
-    "bbox_mode":"BoxMode.XYWH_ABS",
+    "bbox_mode":1,
     "category_id":0
 }
 detectron_df = pd.DataFrame(columns=['file_name','height', 'width','image_id','annotations'])
@@ -115,11 +115,3 @@ if __name__ == '__main__':
         os.makedirs(det_path)
     master_df.to_csv(det_path + f'detectron_df_{version}_{im_class}.csv', index=False)
 
-    # print(main_arr)
-
-    # print(overlay(main_arr[0]))
-    # with Pool(multiprocessing.cpu_count()) as p:
-    #     p.map(overlay, main_arr)
-    #     p.close()
-    #     p.join()
-    # print('Done')
