@@ -18,8 +18,8 @@ def consep_v1_train():
     # make df into a list of dictionaries
     df_list = df.to_dict('records')
     # print datatypes of each column
-    print(df)
-    print(type(df["annotations"][0]))
+    # print(df)
+    # print(type(df["annotations"][0]))
     # print(df_list[0])
     return df_list
 
@@ -50,4 +50,4 @@ for d in random.sample(dataset_dicts, 3):
     vis = visualizer.draw_dataset_dict(d)
     # cv2.imshow(vis.get_image()[:, :, ::-1])
     # save the image
-    cv2.imwrite(f'{path_before_benchmark}/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
+    cv2.imwrite(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
