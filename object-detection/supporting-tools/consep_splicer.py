@@ -10,7 +10,7 @@ import os
 basepath = os.path.dirname(os.path.abspath(__file__))
 print(basepath)
 
-def splicer(no, im_class='train',version='v4'):
+def splicer(no, im_class='train',version='v1'):
     try:
         im_class = im_class[1:]
         labelfile = f'benchmarking/datasets/CoNSeP_master/T{im_class}/Labels/mat/t{im_class}_{no}.mat'
