@@ -59,3 +59,4 @@ dkms.conf
 # .sh files even in subdirectories
 *.sh
 ```
+object-detection/benchmarking/yolov5
