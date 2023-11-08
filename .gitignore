@@ -54,4 +54,8 @@ dkms.conf
 *runs*
 *data*
 */*figure*/*
-*run*
+
+
+# .sh files even in subdirectories
+*.sh
+```
