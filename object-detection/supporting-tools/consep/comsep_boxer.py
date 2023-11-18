@@ -10,7 +10,7 @@ import os
 basepath = os.path.dirname(os.path.abspath(__file__))
 print(basepath)
 
-def overlay(no_arr, im_class='test',version='v1'):
+def overlay(no_arr, im_class='train',version='v1'):
     try:
         im_class = im_class[1:]
         labelfile = f'benchmarking/datasets/CoNSeP/{version}/t{im_class}/labels_mat/t{im_class}_{no_arr[0]}_{no_arr[1]}_{no_arr[2]}.mat'
@@ -108,9 +108,12 @@ if __name__ == '__main__':
                 main_arr.append(no_arr)
     # print(main_arr)
 
-    # overlay(main_arr[0])
-    with Pool(multiprocessing.cpu_count()) as p:
-        p.map(overlay, main_arr)
-        p.close()
-        p.join()
-    print('Done')
+    overlay(main_arr[0], im_class='train',version='v1')
+    overlay(main_arr[0], im_class='train',version='v2')
+    overlay(main_arr[0], im_class='train',version='v3')
+    overlay(main_arr[0], im_class='train',version='v4')
+    # with Pool(multiprocessing.cpu_count()) as p:
+    #     p.map(overlay, main_arr)
+    #     p.close()
+    #     p.join()
+    # print('Done')

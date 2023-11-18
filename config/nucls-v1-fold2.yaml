@@ -1,0 +1,18 @@
+# Fold 2
+path: /capstone_project/object-detection/benchmarking/datasets/NuCLS/v1/fold_2 # dataset root dir
+train: train/images  
+val: val/images  
+test: test/images 
+names: 
+  0: 'apoptotic_body'
+  1: 'ductal_epithelium'
+  2: 'eosinophil'
+  3: 'fibroblast'
+  4: 'lymphocyte'
+  5: 'macrophage'
+  6: 'mitotic_figure'
+  7: 'myoepithelium'
+  8: 'neutrophil'
+  9: 'plasma_cell'
+  10: 'tumor'
+  11: 'vascular_endothelium'

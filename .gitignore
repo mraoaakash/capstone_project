@@ -61,3 +61,4 @@ dkms.conf
 ```
 object-detection/benchmarking/yolov5
 object-detection/benchmarking/report_figures
+*yolo*
