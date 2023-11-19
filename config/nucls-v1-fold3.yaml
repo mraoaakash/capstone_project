@@ -16,3 +16,4 @@ names:
   9: 'plasma_cell'
   10: 'tumor'
   11: 'vascular_endothelium'
+  12: 'unlabeled'
