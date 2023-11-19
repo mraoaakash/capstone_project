@@ -1,5 +1,5 @@
-# Fold 5
-path: /capstone_project/object-detection/benchmarking/datasets/NuCLS/v2/fold_5 # dataset root dir
+# Fold 4
+path: /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLSCBootstrapControl/v1/fold_4 # dataset root dir
 train: train/images  
 val: val/images  
 test: test/images 

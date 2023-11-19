@@ -16,8 +16,8 @@ colors = [(166, 206, 227), (31, 120, 180), (178, 223, 138), (51, 160, 44), (251,
 
 
 for version in ['v1', 'v2']:
-    src_path = f'object-detection/benchmarking/datasets/NuCLS_Master'
-    save_path = f'object-detection/benchmarking/datasets/NuCLS'
+    src_path = f'dataset/NuCLS/data/BootstrapControl'
+    save_path = f'object-detection/benchmarking/datasets/NuCLSCBootstrapControl'
     save_path = os.path.join(save_path, version, 'master')
 
     im_save_path = os.path.join(save_path, 'images')
