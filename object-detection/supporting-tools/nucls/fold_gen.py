@@ -5,8 +5,10 @@ import numpy as np
 import cv2
 import random
 
-for folder in ['NuCLSCBootstrapControl','NuCLSEvalSet','NuCLSPBC','NuCLSQC']:
-    for version in ['v1', 'v2']:
+folds = 3
+
+for folder in ['NuCLSEvalSet']:#['NuCLSCBootstrapControl','NuCLSEvalSet','NuCLSPBC','NuCLSQC']:
+    for version in ['v2']:
         src_path = f'object-detection/benchmarking/datasets/{folder}'
         save_path = f'object-detection/benchmarking/datasets/{folder}'
         src_path = os.path.join(src_path, version, 'master')
@@ -29,24 +31,26 @@ for folder in ['NuCLSCBootstrapControl','NuCLSEvalSet','NuCLSPBC','NuCLSQC']:
         masks.sort()
 
 
-        orig_len = len(ims)//5
+        orig_len = len(ims)//folds
         random_seed = 42
-        random.seed(random_seed)
-        random.shuffle(ims)
-        random.seed(random_seed)
-        random.shuffle(masks)
+        # random.seed(random_seed)
+        # random.shuffle(ims)
+        # random.seed(random_seed)
+        # random.shuffle(masks)
+
+
 
         ex_test_im = ims[0:orig_len]
         ex_test_mask = masks[0:orig_len]
         ex_train = ims[orig_len:]
         ex_train_mask = masks[orig_len:]
 
-        orig_len = len(ex_train)//5
-        random.seed(random_seed)
-        random.shuffle(ex_train)
-        random.seed(random_seed)
-        random.shuffle(ex_train_mask)
-        for i in range(5):
+        orig_len = len(ex_train)//folds
+        # random.seed(random_seed)
+        # random.shuffle(ex_train)
+        # random.seed(random_seed)
+        # random.shuffle(ex_train_mask)
+        for i in range(folds):
             fold_val = ex_train[orig_len*i:orig_len*(i+1)]
             fold_val_mask = ex_train_mask[orig_len*i:orig_len*(i+1)]
 

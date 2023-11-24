@@ -1,0 +1,10 @@
+# Fold 1
+path: /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/fold_2 # dataset root dir
+train: train/images  
+val: val/images  
+test: test/images 
+names: 
+  0: 'nonTIL_stromal'
+  1: 'sTIL'
+  2: 'tumor_any'
+  3: 'other_nucleus'
