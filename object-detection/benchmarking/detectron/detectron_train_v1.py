@@ -145,9 +145,6 @@ data = DatasetCatalog.get(f'test')
 MetadataCatalog.get(f'test').thing_classes = ['nonTIL_stromal','sTIL','tumor_any','other_nucleus']
 MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0,32,193),(115,0,167)]
 
-
-print(data)
-
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file(config_info))
 cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
