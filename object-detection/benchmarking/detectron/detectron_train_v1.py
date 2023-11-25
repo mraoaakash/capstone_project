@@ -4,13 +4,15 @@ import os
 import random
 import cv2
 import matplotlib.pyplot as plt
+import argparse
+import tensorflow as tf
 
 from comet_ml import Experiment
 from comet_ml.integration.pytorch import log_model
 
 
 
-# import some common detectron2 utilities
+import some common detectron2 utilities
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
@@ -19,102 +21,117 @@ from detectron2.data import MetadataCatalog
 from detectron2.data.catalog import DatasetCatalog
 from detectron2.engine import DefaultTrainer
 
+# args
+parser = argparse.ArgumentParser()
+parser.add_argument('--fold', type=int, required=True, default=1)
+parser.add_argument('--version', type=str, required=True, default='detectron')
+parser.add_argument('--model', type=str, required=True, default='mask_rcnn_R_50_FPN_3x')
+parser.add_argument('--epochs', type=int, required=True, default=100)
+parser.add_argument('--batch_size', type=int, default=8, required=False)
+parser.add_argument('--lr', type=float, default=0.00025, required=False)
+parser.add_argument('--gpu', type=str, default='0', required=False)
+parser.add_argument('--num_workers', type=int, required=False, default=4)
+parser.add_argument('--log', type=str, required=False, default=True)
+parser.add_argument('--save', type=str, required=False, default=True)
+parser.add_argument('--project', type=str, required=True, default='capstone')
+parser.add_argument('--name', type=str, required=True, default='experiment')
+parser.add_argument('--data_path', type=str, default=os.curdir, required=True)
+parser.add_argument('--image_dir', type=str, default='images', required=True)
+parser.add_argument('--api_key', type=int, required=False, default=None)
 
-experiment = Experiment(
-  api_key="AKIafKnSIJd2sEZkr8pUN3fnv",
-  project_name="faster-rcnn",
-  workspace="mraoaakash"
-)
-
-path_before_benchmark = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection'
-def consep_v1_train():
-    data_path = f'{path_before_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/detectron_df_test_v1.csv'
-    df = pd.read_csv(data_path)
-    df = df.dropna()
-    df = df.reset_index(drop=True)
-    # changing type of "annotations" to list of dictionaries
-    df["annotations"] = df["annotations"].apply(lambda x: eval(x))
-    # make df into a list of dictionaries
-    df_list = df.to_dict('records')
-    # print datatypes of each column
-    # print(df)
-    # print(type(df["annotations"][0]))
-    # print(df_list[0])
-    return df_list
-
-def consep_v1_test():
-    data_path = f'{path_before_benchmark}/benchmarking/datasets/CoNSeP/detectron_format/detectron_df_train_v1.csv'
-    df = pd.read_csv(data_path)
-    df = df.dropna()
-    df = df.reset_index(drop=True)
-    # make df into a list of dictionaries
-    df_list = df.to_dict('records')
-    # print(df_list[0])
-    return df_list
+parse = parser.parse_args()
 
 
-DatasetCatalog.register("consep_v1_train", consep_v1_train)
-MetadataCatalog.get("consep_v1_train").set(thing_classes=['other','inflammatory','healthy epithelial','dysplastic/malignant epithelial','fibroblast','muscle','endothelial'])
+fold = parse.fold
+version = parse.version
+model = parse.model
+epochs = parse.epochs
+batch_size = parse.batch_size
+lr = parse.lr
+gpu = parse.gpu
+num_workers = parse.num_workers
+log = parse.log
+save = parse.save
+project = parse.project
+name = parse.name
+data_path = parse.data_path
+image_dir = parse.image_dir
+api = parse.api_key
+'''
+example run in multiline
+python detectron_train_v1.py \
+--fold 1 \
+--version detectron \
+--model mask_rcnn_R_50_FPN_3x \
+--epochs 100 \
+--batch_size 8 \
+--lr 0.00025 \
+--gpu 0 \
+--num_workers 4 \
+--log True \
+--save True \
+--project capstone \
+--name mask_rcnn_R_50_FPN_3x \
 
-DatasetCatalog.register("consep_v1_test", consep_v1_test)
-MetadataCatalog.get("consep_v1_test").set(thing_classes=['other','inflammatory','healthy epithelial','dysplastic/malignant epithelial','fibroblast','muscle','endothelial'])
+single line
+python detectron_train_v1.py --fold 1 --version detectron --model mask_rcnn_R_50_FPN_3x --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name mask_rcnn_R_50_FPN_3x --data_path /Users/mraoaakash/Documents/research/capstone_project/object-detection/benchmarking/datasets/NuCLSEvalSet/detectron/master/npsave --image_dir /Users/mraoaakash/Documents/research/capstone_project/object-detection/benchmarking/datasets/NuCLSEvalSet/detectron/master/images
+'''
 
-my_dataset_train_metadata = MetadataCatalog.get("consep_v1_train")
-dataset_dicts = DatasetCatalog.get("consep_v1_train")
+# print summary
+print('Fold: ', fold)
+print('Version: ', version)
+print('Model: ', model)
+print('Epochs: ', epochs)
+print('Batch Size: ', batch_size)
+print('Learning Rate: ', lr)
+print('GPU: ', gpu)
+print('Num Workers: ', num_workers)
+print('Log: ', log)
+print('Save: ', save)
+print('Project: ', project)
+print('Name: ', name)
 
+# experiment = Experiment(
+#     workspace="mraoaakash",
+#     project_name=project,
+# )
+# experiment.log_parameters({
+#     'fold': fold,
+#     'version': version,
+#     'model': model,
+#     'epochs': epochs,
+#     'batch_size': batch_size,
+#     'gpu': gpu,
+#     'num_workers': num_workers,
+#     'log': log,
+#     'save': save,
+#     'project': project,
+#     'name': name,
+#     'data_path': data_path,
+#     'image_dir': image_dir,
+# })
 
+def data_train():
+    data = np.load(os.path.join(data_path,f'fold_{fold}_train.npy'), allow_pickle=True)
+    data = list(data)
+    print(len(data))
+    pass
 
+def data_val():
+    data = np.load(os.path.join(data_path,f'fold_{fold}_val.npy'), allow_pickle=True)
+    data = list(data)
+    print(len(data))
+    pass
 
-
-print(len(dataset_dicts))
-if len(os.listdir(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/') ) != 0:
-    print("Emptying train batch folder")
-    os.system(f'rm {path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/*')
-    print("Done emptying train batch folder")
-for d in random.sample(dataset_dicts, 3):
-    img = cv2.imread(d["file_name"])
-    print(d["file_name"])
-    print(img.shape)
-    visualizer = Visualizer(img[:, :, ::-1], metadata=my_dataset_train_metadata, scale=0.5)
-    vis = visualizer.draw_dataset_dict(d)
-    # cv2.imshow(vis.get_image()[:, :, ::-1])
-    # save the image
-    plt.imsave(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{str(d["file_name"]).split("/")[-1]}', vis.get_image()[:, :, ::-1])
-    # cv2.imwrite(f'{path_before_benchmark}/benchmarking/report_figures/detectron/train_batches/{d["file_name"]}.png', vis.get_image()[:, :, ::-1])
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-
-cfg = get_cfg()
-cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"))
-cfg.DATASETS.TRAIN = ("consep_v1_train",)
-cfg.DATASETS.TEST = ("consep_v1_test",)
-
-cfg.DATALOADER.NUM_WORKERS = 2
-cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml")  # Let training initialize from model zoo
-cfg.SOLVER.IMS_PER_BATCH = 4
-cfg.SOLVER.BASE_LR = 0.001
-
-cfg.SOLVER.WARMUP_ITERS = 0
-cfg.SOLVER.MAX_ITER = 50 #adjust up if val mAP is still rising, adjust down if overfit
-cfg.SOLVER.STEPS = []
-cfg.SOLVER.GAMMA = 0.05
-
-cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE =8
-cfg.MODEL.ROI_HEADS.NUM_CLASSES = 8 #your number of classes + 1
-
-cfg.TEST.EVAL_PERIOD = 500
-
-os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
-
-
-# cfg to dict
-hyper_params = cfg.dump()
-experiment.log_parameters(hyper_params)
-
-trainer = DefaultTrainer(cfg) 
-trainer.resume_or_load(resume=False)
-trainer.train()
+def data_test():
+    data = np.load(os.path.join(data_path,f'test.npy'), allow_pickle=True)
+    data = list(data)
+    print(len(data))
+    pass
 
 
+data_train()
+data_val()
+data_test()
 
-log_model(experiment, trainer, model_name="faster_rcnn_X_101_32x8d_FPN_3x")
+# experiment.end()
