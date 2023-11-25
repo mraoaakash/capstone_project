@@ -170,6 +170,7 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   # set the testing threshold for th
 cfg.DATASETS.TEST = (f'test',)
 predictor = DefaultPredictor(cfg)
 predictions = []
+pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
 for d in data_test():
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
@@ -180,8 +181,11 @@ for d in data_test():
     )
     out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     plt.imshow(out.get_image()[:, :, ::-1])
-    plt.show()
+    plt.axis('off')
+    plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
+    # plt.show()
     break
+print('Predictions: ', predictions)
 
 
 
