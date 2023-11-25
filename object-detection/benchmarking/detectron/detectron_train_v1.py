@@ -24,7 +24,6 @@ from detectron2.engine import DefaultTrainer
 parser = argparse.ArgumentParser()
 parser.add_argument('--fold', type=int, required=True, default=1)
 parser.add_argument('--version', type=str, required=True, default='detectron')
-parser.add_argument('--model', type=str, required=True, default='mask_rcnn_R_50_FPN_3x')
 parser.add_argument('--epochs', type=int, required=True, default=100)
 parser.add_argument('--batch_size', type=int, default=8, required=False)
 parser.add_argument('--lr', type=float, default=0.00025, required=False)
@@ -44,7 +43,6 @@ parse = parser.parse_args()
 
 fold = parse.fold
 version = parse.version
-model = parse.model
 epochs = parse.epochs
 batch_size = parse.batch_size
 lr = parse.lr
@@ -63,7 +61,6 @@ example run in multiline
 python detectron_train_v1.py \
 --fold 1 \
 --version detectron \
---model mask_rcnn_R_50_FPN_3x \
 --epochs 100 \
 --batch_size 8 \
 --lr 0.00025 \
@@ -72,16 +69,15 @@ python detectron_train_v1.py \
 --log True \
 --save True \
 --project capstone \
---name mask_rcnn_R_50_FPN_3x \
+--name faster_rcnn_R_50_FPN_3x \
 
 single line
-python detectron_train_v1.py --fold 1 --version detectron --model mask_rcnn_R_50_FPN_3x --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name mask_rcnn_R_50_FPN_3x --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/npsave --image_dir /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/images --api_key 0 --config_info COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml
+python detectron_train_v1.py --fold 1 --version detectron  --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name faster_rcnn_R_50_FPN_3x --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/npsave --image_dir /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/images --api_key 0 --config_info COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml
 '''
 
 # print summary
 print('Fold: ', fold)
 print('Version: ', version)
-print('Model: ', model)
 print('Epochs: ', epochs)
 print('Batch Size: ', batch_size)
 print('Learning Rate: ', lr)
@@ -166,6 +162,7 @@ cfg.SOLVER.MAX_ITER = 500
 cfg.SOLVER.STEPS = []        
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
+cfg.OUTPUT_DIR = os.path.join(data_path, f'output_{fold}_{model}_{version}')
 
 
 os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
