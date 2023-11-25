@@ -114,19 +114,19 @@ def data_train():
     data = np.load(os.path.join(data_path,f'fold_{fold}_train.npy'), allow_pickle=True)
     data = list(data)
     print(len(data))
-    pass
+    return data
 
 def data_val():
     data = np.load(os.path.join(data_path,f'fold_{fold}_val.npy'), allow_pickle=True)
     data = list(data)
     print(len(data))
-    pass
+    return data
 
 def data_test():
     data = np.load(os.path.join(data_path,f'test.npy'), allow_pickle=True)
     data = list(data)
     print(len(data))
-    pass
+    return data
 
 
 data_train()
