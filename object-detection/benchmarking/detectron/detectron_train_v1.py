@@ -5,14 +5,13 @@ import random
 import cv2
 import matplotlib.pyplot as plt
 import argparse
-import tensorflow as tf
 
 from comet_ml import Experiment
 from comet_ml.integration.pytorch import log_model
 
 
 
-import some common detectron2 utilities
+# import some common detectron2 utilities
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
@@ -74,7 +73,7 @@ python detectron_train_v1.py \
 --name mask_rcnn_R_50_FPN_3x \
 
 single line
-python detectron_train_v1.py --fold 1 --version detectron --model mask_rcnn_R_50_FPN_3x --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name mask_rcnn_R_50_FPN_3x --data_path /Users/mraoaakash/Documents/research/capstone_project/object-detection/benchmarking/datasets/NuCLSEvalSet/detectron/master/npsave --image_dir /Users/mraoaakash/Documents/research/capstone_project/object-detection/benchmarking/datasets/NuCLSEvalSet/detectron/master/images
+python detectron_train_v1.py --fold 1 --version detectron --model mask_rcnn_R_50_FPN_3x --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name mask_rcnn_R_50_FPN_3x --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/npsave --image_dir /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/images
 '''
 
 # print summary
