@@ -171,6 +171,8 @@ cfg.DATASETS.TEST = (f'test',)
 predictor = DefaultPredictor(cfg)
 predictions = []
 pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
+if not os.path.exists(pred_save_path):
+    os.makedirs(pred_save_path)
 for d in data_test():
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
