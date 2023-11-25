@@ -128,9 +128,6 @@ def data_test():
     return data
 
 
-data_train()
-data_val()
-data_test()
 
 DatasetCatalog.register(f'fold_{fold}_train', data_train)
 data = DatasetCatalog.get(f'fold_{fold}_train')
@@ -176,7 +173,7 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   # set the testing threshold for th
 cfg.DATASETS.TEST = (f'test',)
 predictor = DefaultPredictor(cfg)
 predictions = []
-for d in data_test:
+for d in data_test():
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
     predictions.append(outputs)
