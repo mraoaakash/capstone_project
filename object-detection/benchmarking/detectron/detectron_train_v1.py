@@ -133,4 +133,9 @@ data_train()
 data_val()
 data_test()
 
+DatasetCatalog.register(f'fold_{fold}_train', data_train)
+data = DatasetCatalog.get(f'fold_{fold}_train')
+print(data)
+
+
 # experiment.end()
