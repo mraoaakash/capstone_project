@@ -176,8 +176,7 @@ for d in data_test():
     predictions.append(outputs)
     v = Visualizer(im[:, :, ::-1],
                     metadata=MetadataCatalog.get(f'test'), 
-                    scale=0.8, 
-                    instance_mode=colormode.IMAGE_BW   # remove the colors of unsegmented pixels
+                    scale=0.8,
     )
     out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     plt.imshow(out.get_image()[:, :, ::-1])
