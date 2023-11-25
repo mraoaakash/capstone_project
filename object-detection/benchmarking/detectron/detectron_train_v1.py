@@ -186,7 +186,6 @@ for d in data_test():
     plt.axis('off')
     plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
     # plt.show()
-    break
 print('Predictions: ', predictions)
 predictions = np.array(predictions)
 np.save(os.path.join(cfg.OUTPUT_DIR, 'predictions.npy'), predictions)
