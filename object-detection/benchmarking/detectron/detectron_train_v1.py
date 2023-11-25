@@ -162,7 +162,7 @@ cfg.SOLVER.MAX_ITER = 500
 cfg.SOLVER.STEPS = []        
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
-cfg.OUTPUT_DIR = os.path.join(data_path, f'output_{fold}_{model}_{version}')
+cfg.OUTPUT_DIR = os.path.join(data_path, f'output_{fold}_{name}_{version}')
 
 
 os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
