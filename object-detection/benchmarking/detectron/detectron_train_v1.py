@@ -1,3 +1,4 @@
+from turtle import colormode
 import pandas as pd
 import numpy as np
 import os
@@ -170,6 +171,24 @@ trainer = DefaultTrainer(cfg)
 trainer.resume_or_load(resume=False)
 trainer.train()
 
+cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   # set the testing threshold for this model
+cfg.DATASETS.TEST = (f'test',)
+predictor = DefaultPredictor(cfg)
+predictions = []
+for d in data_test:
+    im = cv2.imread(d["file_name"])
+    outputs = predictor(im)
+    predictions.append(outputs)
+    v = Visualizer(im[:, :, ::-1],
+                    metadata=MetadataCatalog.get(f'test'), 
+                    scale=0.8, 
+                    instance_mode=colormode.IMAGE_BW   # remove the colors of unsegmented pixels
+    )
+    out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    plt.imshow(out.get_image()[:, :, ::-1])
+    plt.show()
+    break
 
 
 
