@@ -188,7 +188,8 @@ for d in data_test():
     # plt.show()
     break
 print('Predictions: ', predictions)
-
+predictions = np.array(predictions)
+np.save(os.path.join(cfg.OUTPUT_DIR, 'predictions.npy'), predictions)
 
 
 # experiment.end()
