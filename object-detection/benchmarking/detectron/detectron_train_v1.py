@@ -20,6 +20,27 @@ from detectron2.data import MetadataCatalog
 from detectron2.data.catalog import DatasetCatalog
 from detectron2.engine import DefaultTrainer
 
+
+
+def setup(fold, config_info, outputdir='output'):
+    cfg = get_cfg()
+    cfg.merge_from_file(model_zoo.get_config_file(config_info))
+    cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
+    cfg.DATASETS.TEST = (f'fold_{fold}_val',)
+    cfg.DATALOADER.NUM_WORKERS = 2
+    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)  
+    cfg.SOLVER.IMS_PER_BATCH = 8
+    cfg.SOLVER.BASE_LR = 0.00025
+    cfg.SOLVER.MAX_ITER = 500
+    cfg.SOLVER.STEPS = []        
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
+    cfg.OUTPUT_DIR = outputdir
+    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+
+    return cfg
+
+
 # args
 parser = argparse.ArgumentParser()
 parser.add_argument('--fold', type=int, required=True, default=1)
@@ -127,13 +148,7 @@ def data_val():
 def data_test():
     data = np.load(os.path.join(data_path,f'test.npy'), allow_pickle=True)
     data = list(data)
-    print(len(data))
     return data
-
-
-data_train()
-data_val()
-data_test()
 
 DatasetCatalog.register(f'fold_{fold}_train', data_train)
 data = DatasetCatalog.get(f'fold_{fold}_train')
@@ -152,23 +167,10 @@ MetadataCatalog.get(f'test').thing_classes = ['nonTIL_stromal','sTIL','tumor_any
 MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0,32,193),(115,0,167)]
 
 
-print(data)
-
-cfg = get_cfg()
-cfg.merge_from_file(model_zoo.get_config_file(config_info))
-cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
-cfg.DATASETS.TEST = (f'fold_{fold}_val',)
-cfg.DATALOADER.NUM_WORKERS = 2
-cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)  
-cfg.SOLVER.IMS_PER_BATCH = 8
-cfg.SOLVER.BASE_LR = 0.00025
-cfg.SOLVER.MAX_ITER = 500
-cfg.SOLVER.STEPS = []        
-cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
-cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
 
 
-os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+
+cfg = setup(fold, config_info, outputdir = os.path.join(project, name))
 trainer = DefaultTrainer(cfg) 
 trainer.resume_or_load(resume=False)
 trainer.train()
