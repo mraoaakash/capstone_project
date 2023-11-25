@@ -37,6 +37,7 @@ parser.add_argument('--name', type=str, required=True, default='experiment')
 parser.add_argument('--data_path', type=str, default=os.curdir, required=True)
 parser.add_argument('--image_dir', type=str, default='images', required=True)
 parser.add_argument('--api_key', type=int, required=False, default=None)
+parser.add_argument('--config_info', type=str, required=True, default="COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
 
 parse = parser.parse_args()
 
@@ -56,6 +57,7 @@ name = parse.name
 data_path = parse.data_path
 image_dir = parse.image_dir
 api = parse.api_key
+config_info = parse.config_info
 '''
 example run in multiline
 python detectron_train_v1.py \
@@ -73,7 +75,7 @@ python detectron_train_v1.py \
 --name mask_rcnn_R_50_FPN_3x \
 
 single line
-python detectron_train_v1.py --fold 1 --version detectron --model mask_rcnn_R_50_FPN_3x --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name mask_rcnn_R_50_FPN_3x --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/npsave --image_dir /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/images
+python detectron_train_v1.py --fold 1 --version detectron --model mask_rcnn_R_50_FPN_3x --epochs 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name mask_rcnn_R_50_FPN_3x --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/npsave --image_dir /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/images --config_info COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml
 '''
 
 # print summary
@@ -153,11 +155,11 @@ MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0
 print(data)
 
 cfg = get_cfg()
-cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/faster_rcnn_R_50_FPN_3x.yaml"))
+cfg.merge_from_file(model_zoo.get_config_file(config_info))
 cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
 cfg.DATASETS.TEST = (f'fold_{fold}_val',)
 cfg.DATALOADER.NUM_WORKERS = 2
-cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/faster_rcnn_R_50_FPN_3x.yaml")  
+cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)  
 cfg.SOLVER.IMS_PER_BATCH = 8
 cfg.SOLVER.BASE_LR = 0.00025
 cfg.SOLVER.MAX_ITER = 500
