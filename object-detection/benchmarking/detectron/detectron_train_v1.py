@@ -23,108 +23,29 @@ from detectron2.data import MetadataCatalog
 from detectron2.data.catalog import DatasetCatalog
 from detectron2.engine import DefaultTrainer
 
-# args
-parser = argparse.ArgumentParser()
-parser.add_argument('--fold', type=int, required=True, default=1)
-parser.add_argument('--version', type=str, required=True, default='detectron')
-parser.add_argument('--max_iters', type=int, required=True, default=100)
-parser.add_argument('--batch_size', type=int, default=8, required=False)
-parser.add_argument('--lr', type=float, default=0.00025, required=False)
-parser.add_argument('--gpu', type=str, default='0', required=False)
-parser.add_argument('--num_workers', type=int, required=False, default=4)
-parser.add_argument('--log', type=str, required=False, default=True)
-parser.add_argument('--save', type=str, required=False, default=True)
-parser.add_argument('--project', type=str, required=True, default='capstone')
-parser.add_argument('--name', type=str, required=True, default='experiment')
-parser.add_argument('--data_path', type=str, default=os.curdir, required=True)
-parser.add_argument('--image_dir', type=str, default='images', required=True)
-parser.add_argument('--api_key', type=int, required=False, default=None)
-parser.add_argument('--config_info', type=str, required=True, default="COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
+fold = 1
 
-parse = parser.parse_args()
-
-
-fold = parse.fold
-version = parse.version
-max_iters = parse.max_iters
-batch_size = parse.batch_size
-lr = parse.lr
-gpu = parse.gpu
-num_workers = parse.num_workers
-log = parse.log
-save = parse.save
-project = parse.project
-name = parse.name
-data_path = parse.data_path
-image_dir = parse.image_dir
-api = parse.api_key
-config_info = parse.config_info
-'''
-example run in multiline
-python detectron_train_v1.py \
---fold 1 \
---version detectron \
---max_iters 100 \
---batch_size 8 \
---lr 0.00025 \
---gpu 0 \
---num_workers 4 \
---log True \
---save True \
---project capstone \
---name faster_rcnn_R_50_FPN_3x \
-
-single line
-python detectron_train_v1.py --fold 1 --version detectron  --max_iters 100 --batch_size 8 --lr 0.00025 --gpu 0 --num_workers 4 --log True --save True --project capstone-project --name faster_rcnn_R_50_FPN_3x --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/npsave --image_dir /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/EvalSet/detectron/master/images --api_key 0 --config_info COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml
-'''
-
-# print summary
-print('Fold: ', fold)
-print('Version: ', version)
-print('max_iters: ', max_iters)
-print('Batch Size: ', batch_size)
-print('Learning Rate: ', lr)
-print('GPU: ', gpu)
-print('Num Workers: ', num_workers)
-print('Log: ', log)
-print('Save: ', save)
-print('Project: ', project)
-print('Name: ', name)
-
-# experiment = Experiment(
-#     workspace="mraoaakash",
-#     project_name=project,
-# )
-# experiment.log_parameters({
-#     'fold': fold,
-#     'version': version,
-#     'model': model,
-#     'max_iters': max_iters,
-#     'batch_size': batch_size,
-#     'gpu': gpu,
-#     'num_workers': num_workers,
-#     'log': log,
-#     'save': save,
-#     'project': project,
-#     'name': name,
-#     'data_path': data_path,
-#     'image_dir': image_dir,
-# })
+data_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/fold_1/'
+config_info = "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"
+max_iters = 1500
+name  = 'exp_1_iters_1'
+project = 'capstone-project' 
+version = '1'
 
 def data_train():
-    data = np.load(os.path.join(data_path,f'fold_{fold}_train.npy'), allow_pickle=True)
+    data = np.load(os.path.join(data_path,f'train.npy'), allow_pickle=True)
     data = list(data)
     print(len(data))
     return data
 
 def data_val():
-    data = np.load(os.path.join(data_path,f'fold_{fold}_val.npy'), allow_pickle=True)
+    data = np.load(os.path.join(data_path,f'test.npy'), allow_pickle=True)
     data = list(data)
     print(len(data))
     return data
 
 def data_test():
-    data = np.load(os.path.join(data_path,f'test.npy'), allow_pickle=True)
+    data = np.load(os.path.join("/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/final_test",f'test.npy'), allow_pickle=True)
     data = list(data)
     print(len(data))
     return data
@@ -150,18 +71,22 @@ MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0
 dataset_dicts = data_train()
 metadata = MetadataCatalog.get(f'fold_{fold}_train')
 
-for d in random.sample(dataset_dicts, 3):
+i = 0
+for d in random.sample(dataset_dicts, 10):
     img = cv2.imread(d["file_name"])
-    visualizer = Visualizer(img[:, :, ::-1], metadata=metadata, scale=0.5)
+    print(img.shape)
+    visualizer = Visualizer(img[:, :, ::-1], metadata=metadata, scale=1)
     vis = visualizer.draw_dataset_dict(d)
     im = vis.get_image()[:, :, ::-1]
-    cv2.imshow('', im)
+    print(im.shape)
+    plt.imshow(im)
+    plt.savefig(f"/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/outputs/train_imgs/train_{i}.png",dpi=300)
+    plt.close()
     # cv2.waitKey(0)
     # break
+    i+=1
 
 plt.show()
-
-# sys.exit()
 
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file(config_info))
