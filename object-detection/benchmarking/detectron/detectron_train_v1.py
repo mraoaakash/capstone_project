@@ -154,11 +154,14 @@ for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
     visualizer = Visualizer(img[:, :, ::-1], metadata=metadata, scale=0.5)
     vis = visualizer.draw_dataset_dict(d)
-    cv2.imshow(vis.get_image()[:, :, ::-1])
+    im = vis.get_image()[:, :, ::-1]
+    cv2.imshow('', im)
+    # cv2.waitKey(0)
+    # break
 
 plt.show()
 
-sys.exit()
+# sys.exit()
 
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file(config_info))
