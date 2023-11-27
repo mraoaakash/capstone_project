@@ -10,6 +10,8 @@ import argparse
 from comet_ml import Experiment
 from comet_ml.integration.pytorch import log_model
 
+import sys
+
 
 
 # import some common detectron2 utilities
@@ -144,6 +146,18 @@ DatasetCatalog.register(f'test', data_test)
 data = DatasetCatalog.get(f'test')
 MetadataCatalog.get(f'test').thing_classes = ['nonTIL_stromal','sTIL','tumor_any','other_nucleus']
 MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0,32,193),(115,0,167)]
+
+dataset_dicts = data_train()
+
+for d in random.sample(dataset_dicts, 3):
+    img = cv2.imread(d["file_name"])
+    visualizer = Visualizer(img[:, :, ::-1], metadata=MetadataCatalog.get(f'fold_{fold}_train'), scale=0.5)
+    vis = visualizer.draw_dataset_dict(d)
+    cv2.imshow(vis.get_image()[:, :, ::-1])
+
+plt.show()
+
+sys.exit()
 
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file(config_info))
