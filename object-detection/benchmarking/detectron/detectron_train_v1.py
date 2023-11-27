@@ -148,10 +148,11 @@ MetadataCatalog.get(f'test').thing_classes = ['nonTIL_stromal','sTIL','tumor_any
 MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0,32,193),(115,0,167)]
 
 dataset_dicts = data_train()
+metadata = MetadataCatalog.get(f'fold_{fold}_train')
 
 for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
-    visualizer = Visualizer(img[:, :, ::-1], metadata=MetadataCatalog.get(f'fold_{fold}_train'), scale=0.5)
+    visualizer = Visualizer(img[:, :, ::-1], metadata=metadata, scale=0.5)
     vis = visualizer.draw_dataset_dict(d)
     cv2.imshow(vis.get_image()[:, :, ::-1])
 
