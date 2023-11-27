@@ -47,7 +47,7 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
         return data
 
     def data_test():
-        data = np.load(os.path.join(data_path, "final_test",f'test.npy'), allow_pickle=True)
+        data = np.load(os.path.join(data_path,"final_test",f'test.npy'), allow_pickle=True)
         data = list(data)
         print(len(data))
         return data
@@ -150,4 +150,112 @@ if __name__ == "__main__":
     argparse.add_argument('--version', type=str, default=None, help='version')
     args = argparse.parse_args()
     train_detectron2(args.data_path, args.config_info, args.max_iters, args.name, args.project, args.fold, args.version)
-    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 1500 --name faster_rcnn_R_50_FPN_3x --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_3 --project capstone-project --fold 3 --version 1
+
+    # fast_rcnn_R_50_FPN_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/fast_rcnn_R_50_FPN_1x.yaml" --max_iters 2000 --name fast_rcnn_R_50_FPN_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/fast_rcnn_R_50_FPN_1x.yaml" --max_iters 2000 --name fast_rcnn_R_50_FPN_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/fast_rcnn_R_50_FPN_1x.yaml" --max_iters 2000 --name fast_rcnn_R_50_FPN_1x_fold_3 --project capstone-project --fold 3 --version 1
+
+    # faster_rcnn_R_101_C4_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_101_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_C4_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_101_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_C4_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_101_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_C4_3x_fold_3 --project capstone-project --fold 3 --version 1
+
+
+    # faster_rcnn_R_101_DC5_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_101_DC5_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_DC5_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_101_DC5_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_DC5_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_101_DC5_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_DC5_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+    # faster_rcnn_R_101_FPN_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_FPN_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_FPN_3x_fold_3 --project capstone-project --fold 3 --version 1
+
+
+    # faster_rcnn_R_50_C4_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_C4_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_C4_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_C4_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_C4_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_C4_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_C4_1x_fold_3 --project capstone-project --fold 3 --version 1
+
+
+    # faster_rcnn_R_50_C4_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_C4_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_C4_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_C4_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+    
+    # faster_rcnn_R_50_DC5_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_DC5_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_DC5_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_DC5_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_DC5_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_DC5_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_DC5_1x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+    # faster_rcnn_R_50_DC5_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_DC5_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_DC5_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_DC5_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_DC5_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_DC5_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_DC5_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+    # faster_rcnn_R_50_FPN_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_FPN_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_FPN_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_FPN_1x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_1x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+
+    # faster_rcnn_R_50_FPN_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+
+    # faster_rcnn_X_101_32x8d_FPN_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_X_101_32x8d_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_X_101_32x8d_FPN_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_X_101_32x8d_FPN_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+
+    # fcos_R_50_FPN_1x
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/fcos_R_50_FPN_1x.yaml" --max_iters 2000 --name fcos_R_50_FPN_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/fcos_R_50_FPN_1x.yaml" --max_iters 2000 --name fcos_R_50_FPN_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/fcos_R_50_FPN_1x.yaml" --max_iters 2000 --name fcos_R_50_FPN_1x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+
+    # retinanet_R_101_FPN_3x
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_101_FPN_3x.yaml" --max_iters 2000 --name retinanet_R_101_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_101_FPN_3x.yaml" --max_iters 2000 --name retinanet_R_101_FPN_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_101_FPN_3x.yaml" --max_iters 2000 --name retinanet_R_101_FPN_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+ 
+
+    # retinanet_R_50_FPN_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_50_FPN_1x.yaml" --max_iters 2000 --name retinanet_R_50_FPN_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_50_FPN_1x.yaml" --max_iters 2000 --name retinanet_R_50_FPN_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_50_FPN_1x.yaml" --max_iters 2000 --name retinanet_R_50_FPN_1x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+
+    # retinanet_R_50_FPN_3x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_50_FPN_3x.yaml" --max_iters 2000 --name retinanet_R_50_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_50_FPN_3x.yaml" --max_iters 2000 --name retinanet_R_50_FPN_3x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/retinanet_R_50_FPN_3x.yaml" --max_iters 2000 --name retinanet_R_50_FPN_3x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+    # rpn_R_50_C4_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/rpn_R_50_C4_1x.yaml" --max_iters 2000 --name rpn_R_50_C4_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/rpn_R_50_C4_1x.yaml" --max_iters 2000 --name rpn_R_50_C4_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/rpn_R_50_C4_1x.yaml" --max_iters 2000 --name rpn_R_50_C4_1x_fold_3 --project capstone-project --fold 3 --version 1
+    
+
+
+    # rpn_R_50_FPN_1x 
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/rpn_R_50_FPN_1x.yaml" --max_iters 2000 --name rpn_R_50_FPN_1x_fold_1 --project capstone-project --fold 1 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/rpn_R_50_FPN_1x.yaml" --max_iters 2000 --name rpn_R_50_FPN_1x_fold_2 --project capstone-project --fold 2 --version 1
+    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds  --config_info "COCO-Detection/rpn_R_50_FPN_1x.yaml" --max_iters 2000 --name rpn_R_50_FPN_1x_fold_3 --project capstone-project --fold 3 --version 1
