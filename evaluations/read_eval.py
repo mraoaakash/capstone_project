@@ -32,6 +32,10 @@ cfg.MODEL.WEIGHTS = os.path.join(MODEL_PATH, "model_final.pth")
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4
 cfg.DATASETS.TEST = (f'test',)
+# change max detections
+cfg.MODEL.ROI_HEADS.NMS_THRESH_TEST = 0.5
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
+cfg.TEST.DETECTIONS_PER_IMAGE = 10000
 predictor = DefaultPredictor(cfg)
 
 evaluator = COCOEvaluator(f'test', cfg, False, output_dir=f'{MODEL_PATH}/eval')
