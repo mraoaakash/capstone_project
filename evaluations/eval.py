@@ -58,8 +58,9 @@ for model in models:
         print(boxes_np.shape)
         print(scores)
         print(classes)
-        
-        
+        with open(os.path.join(pred_save_path, f'{d["image_id"]}.txt'), 'a+') as f:
+            for i in range(len(boxes_np)):
+                f.write(f'{classes[i]} {scores[i]} {boxes_np[i][0]} {boxes_np[i][1]} {boxes_np[i][2]} {boxes_np[i][3]}\n')
         i+=1
         break
     break
