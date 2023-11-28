@@ -111,9 +111,16 @@ for annot in gt:
     with open(os.path.join(ground_truth_annot, f'{image_id}.txt'), 'w+') as f:
         for k in range(len(boxes)):
             # making yolo format
-            x_center = (boxes[k][0] + boxes[k][2]/2)
-            y_center = (boxes[k][1] + boxes[k][3]/2)
-            width = boxes[k][2]
-            height = boxes[k][3]
-            f.write(f'{classes[k]} {x_center} {y_center} {width} {height}\n')
+            xmin = boxes[k][0]
+            ymin = boxes[k][1]
+            xmax = boxes[k][0] + boxes[k][2]
+            ymax = boxes[k][1] + boxes[k][3]
+
+            x_center = (xmin + xmax) / (2 * im_width)
+            y_center = (ymin + ymax) / (2 * im_height)
+            w = (xmax - xmin) / im_width
+            h = (ymax - ymin) / im_height
+
+            f.write(f'{classes[k]} {x_center} {y_center} {w} {h}\n')
+            
 # run_pred_level()
