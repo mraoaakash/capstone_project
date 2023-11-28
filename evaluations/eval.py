@@ -36,9 +36,10 @@ MetadataCatalog.get(f'test').thing_classes = ['nonTIL_stromal','sTIL','tumor_any
 MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0,32,193),(115,0,167)]
 
 models = os.listdir(main_path)
+print(models)
 def run_pred_level():
     for model in models:
-        if 'rpn' in model:
+        if 'rpn' in model or 'evaluations' in model:
             continue
         prediction = np.load(os.path.join(main_path, model, 'predictions.npy'), allow_pickle=True)
         print(prediction)
