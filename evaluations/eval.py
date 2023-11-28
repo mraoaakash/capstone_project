@@ -106,6 +106,7 @@ for annot in gt:
     print(boxes.shape)
     print(classes.shape)
     print(cofidences.shape)
+    im_width, im_height = cv2.imread(file_name).shape[:2]
     shutil.copy(file_name, os.path.join(ground_truth_img, f'{image_id}.png'))
     with open(os.path.join(ground_truth_annot, f'{image_id}.txt'), 'w+') as f:
         for k in range(len(boxes)):
@@ -119,6 +120,13 @@ for annot in gt:
             # computing the width and height of the box
             w = x2 - x1
             h = y2 - y1
+
+            # adjusting the coordinates based on the size of the image
+            x_center = x_center / im_width
+            y_center = y_center / im_height
+            w = w / im_width
+            h = h / im_height
+            
             f.write(f'{classes[k]} {x_center} {y_center} {w} {h}\n')
 
 # run_pred_level()
