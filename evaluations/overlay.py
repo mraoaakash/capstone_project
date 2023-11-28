@@ -111,7 +111,9 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
 
     predictor = DefaultPredictor(cfg)
     predictions = []
-    pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
+    pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions1')
+    if not os.path.isdir(pred_save_path):
+        os.makedirs(pred_save_path)
     for d in data_test():
         im = cv2.imread(d["file_name"])
         outputs = predictor(im)
@@ -141,5 +143,4 @@ if __name__ == "__main__":
     argparse.add_argument('--version', type=str, default=None, help='version')
     args = argparse.parse_args()
     train_detectron2(args.data_path, args.config_info, args.max_iters, args.name, args.project, args.fold, args.version)
-    # python3 train_detectron2.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml" --max_iters 2000 --name faster_rcnn_R_50_FPN_3x_fold_1 --project capstone-project --fold 1 --version 1
-    
+    # python3 overlay.py --data_path /media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds --config_info "COCO-Detection/faster_rcnn_R_101_C4_3x.yaml" --max_iters 2000 --name faster_rcnn_R_101_C4_3x --project capstone-project --fold 1 --version 1
