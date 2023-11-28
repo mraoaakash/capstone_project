@@ -101,5 +101,10 @@ for d in data_test():
     # plt.axis('off')
     # plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
     # # plt.show()
-
+    boxes = outputs["instances"].pred_boxes.tensor.cpu().numpy()
+    scores = outputs["instances"].scores.cpu().numpy()
+    classes = outputs["instances"].pred_classes.cpu().numpy()
+    print(boxes)
+    print(scores)
+    print(classes)
     break
