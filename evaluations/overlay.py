@@ -29,10 +29,11 @@ im = cv2.resize(im, (0, 0), fx=0.8, fy=0.8)
 plt.imshow(im)
 # gt
 for i in range(len(gt)):
-    x1 = gt.iloc[i]['x1']
-    y1 = gt.iloc[i]['y1']
-    x2 = gt.iloc[i]['x2']
-    y2 = gt.iloc[i]['y2']
+    # scale down to 0.8
+    x1 = gt.iloc[i]['x1']*0.8
+    y1 = gt.iloc[i]['y1']*0.8
+    x2 = gt.iloc[i]['x2']*0.8
+    y2 = gt.iloc[i]['y2']*0.8
     # convert to int
     x1 = int(x1)
     y1 = int(y1)
