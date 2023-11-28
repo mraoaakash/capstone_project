@@ -122,10 +122,10 @@ for annot in gt:
             h = y2 - y1
 
             # adjusting the coordinates based on the size of the image
-            x_center = x_center / im_width
-            y_center = y_center / im_height
-            w = w / im_width
-            h = h / im_height
+            x_center = x_center 
+            y_center = y_center 
+            w = w 
+            h = h 
 
             f.write(f'{classes[k]} {x_center} {y_center} {w} {h}\n')
 
