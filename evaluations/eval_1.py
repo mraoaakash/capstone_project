@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 fold = 1
 name = f'faster_rcnn_R_50_C4_1x_fold_{fold}'
-config_info = f'COCO-Detection/{name[:-7]}'
+config_info = f'COCO-Detection/{name[:-7]}.yaml'
 
 def bb_intersection_over_union(a,b):
     # compute IoU
