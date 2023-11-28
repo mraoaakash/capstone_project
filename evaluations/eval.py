@@ -5,6 +5,7 @@ import seaborn as sns
 import os
 import sys
 import cv2
+import shutil
 
 # import some common detectron2 utilities
 from detectron2 import model_zoo
@@ -35,32 +36,52 @@ MetadataCatalog.get(f'test').thing_classes = ['nonTIL_stromal','sTIL','tumor_any
 MetadataCatalog.get(f'test').thing_colors = [(161,9,9),(239,222,0),(22,181,0),(0,32,193),(115,0,167)]
 
 models = os.listdir(main_path)
+def run_pred_level():
+    for model in models:
+        if 'rpn' in model:
+            continue
+        prediction = np.load(os.path.join(main_path, model, 'predictions.npy'), allow_pickle=True)
+        pred_save_path = os.path.join(outpath, model)
+        if not os.path.exists(pred_save_path):
+            os.makedirs(pred_save_path)
 
-for model in models:
-    prediction = np.load(os.path.join(main_path, model, 'predictions.npy'), allow_pickle=True)
-    pred_save_path = os.path.join(outpath, model)
-    if not os.path.exists(pred_save_path):
-         os.makedirs(pred_save_path)
-
-    i = 0
-    for d in data_test():
-        print(d['image_id'])
-        im = cv2.imread(d["file_name"])
-        boxes = prediction[i]['instances'].pred_boxes
-        classes = prediction[i]['instances'].pred_classes.cpu().numpy()
-        scores = prediction[i]['instances'].scores.cpu().numpy()
-        boxes_np = []
-        for i in boxes.__iter__():
-            box = i.cpu().numpy()
-            print(box)
-            boxes_np.append(box)
-        boxes_np = np.array(boxes_np)
-        print(boxes_np.shape)
-        print(scores)
-        print(classes)
-        with open(os.path.join(pred_save_path, f'{d["image_id"]}.txt'), 'a+') as f:
-            for i in range(len(boxes_np)):
-                f.write(f'{classes[i]} {scores[i]} {boxes_np[i][0]} {boxes_np[i][1]} {boxes_np[i][2]} {boxes_np[i][3]}\n')
-        i+=1
-        break
+        i = 0
+        for d in data_test():
+            boxes_np = []
+            boxes = []
+            classes = []
+            scpres = []
+            box = []
+            
+            print(d['image_id'])
+            print(model)
+            im = cv2.imread(d["file_name"])
+            boxes = prediction[i]['instances'].pred_boxes
+            classes = prediction[i]['instances'].pred_classes.cpu().numpy()
+            scores = prediction[i]['instances'].scores.cpu().numpy()
+            for j in boxes.__iter__():
+                box = j.cpu().numpy()
+                boxes_np.append(box)
+            boxes_np = np.array(boxes_np)
+            print(boxes_np.shape)
+            print(scores.shape)
+            print(classes.shape)
+            with open(os.path.join(pred_save_path, f'{d["image_id"]}.txt'), 'w+') as f:
+                for k in range(len(boxes_np)):
+                    f.write(f'{classes[k]} {scores[k]} {boxes_np[k][0]} {boxes_np[k][1]} {boxes_np[k][2]} {boxes_np[k][3]}\n')
+            i+=1
+        
+test_annnot_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/final_test/test.npy'
+gt = np.load(test_annnot_path, allow_pickle=True)
+for annot in gt:
+    image_id = annot['image_id']
+    annotations = annot['annotations']
+    classes = []
+    cofidences = []
+    boxes = []
+    for annotation in annotations:
+        print(annotation)
+        class_id = annotation['category_id']
+        confidence = 1.0
+        box = annotation['bbox']
     break
