@@ -62,9 +62,6 @@ for fold in [1,2,3]:
         # model_preds = '{basepath}/faster_rcnn_R_50_C4_1x_fold_1'
 
 
-
-
-
         model_preds = '{basepath}/{model_info}_fold_{fold}'
         cfg = get_cfg()
         cfg.merge_from_file(model_zoo.get_config_file(config_info))
