@@ -107,4 +107,8 @@ for d in data_test():
     print(boxes)
     print(scores)
     print(classes)
+
+    gt_boxes = d['annotations']['bbox']
+    print(gt_boxes)
+    
     break
