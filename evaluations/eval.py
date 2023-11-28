@@ -112,8 +112,8 @@ for annot in gt:
         for k in range(len(boxes)):
             x1 = boxes[k][0]
             y1 = boxes[k][1]
-            x2 = boxes[k][0] + boxes[k][2]
-            y2 = boxes[k][1] + boxes[k][3]
+            x2 = boxes[k][2]
+            y2 = boxes[k][3]
             # computing the center of the box
             x_center = (x1 + x2) / 2.0
             y_center = (y1 + y2) / 2.0
@@ -126,7 +126,7 @@ for annot in gt:
             y_center = y_center / im_height
             w = w / im_width
             h = h / im_height
-            
+
             f.write(f'{classes[k]} {x_center} {y_center} {w} {h}\n')
 
 # run_pred_level()
