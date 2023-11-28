@@ -73,29 +73,30 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
     dataset_dicts = data_train()
     metadata = MetadataCatalog.get(f'fold_{fold}_train')
 
-    i = 0
-    for d in random.sample(dataset_dicts, 10):
-        img = cv2.imread(d["file_name"])
-        print(img.shape)
-        visualizer = Visualizer(img[:, :, ::-1], metadata=metadata, scale=1)
-        vis = visualizer.draw_dataset_dict(d)
-        im = vis.get_image()[:, :, ::-1]
-        print(im.shape)
-        plt.imshow(im)
-        plt.savefig(f"/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/outputs/train_imgs/train_{i}.png",dpi=300)
-        plt.close()
-        # cv2.waitKey(0)
-        # break
-        i+=1
+    # i = 0
+    # for d in random.sample(dataset_dicts, 10):
+    #     img = cv2.imread(d["file_name"])
+    #     print(img.shape)
+    #     visualizer = Visualizer(img[:, :, ::-1], metadata=metadata, scale=1)
+    #     vis = visualizer.draw_dataset_dict(d)
+    #     im = vis.get_image()[:, :, ::-1]
+    #     print(im.shape)
+    #     plt.imshow(im)
+    #     plt.savefig(f"/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/outputs/train_imgs/train_{i}.png",dpi=300)
+    #     plt.close()
+    #     # cv2.waitKey(0)
+    #     # break
+    #     i+=1
 
-    plt.show()
+    # plt.show()
 
     cfg = get_cfg()
     cfg.merge_from_file(model_zoo.get_config_file(config_info))
     cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
     cfg.DATASETS.TEST = (f'fold_{fold}_val',)
     cfg.DATALOADER.NUM_WORKERS = 2
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)  
+    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)
+    cfg.MODEL.LOAD_PROPOSALS = False
     cfg.SOLVER.IMS_PER_BATCH = 8
     cfg.SOLVER.BASE_LR = 0.00025
     cfg.SOLVER.MAX_ITER = max_iters
@@ -105,10 +106,10 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
     cfg.OUTPUT_DIR = os.path.join(data_path, f'outputs/{name}')
 
 
-    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
-    trainer = DefaultTrainer(cfg) 
-    trainer.resume_or_load(resume=False)
-    trainer.train()
+    # os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+    # trainer = DefaultTrainer(cfg) 
+    # trainer.resume_or_load(resume=False)
+    # trainer.train()
 
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   # set the testing threshold for this model
@@ -116,20 +117,20 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
     predictor = DefaultPredictor(cfg)
     predictions = []
     pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
-    if not os.path.exists(pred_save_path):
-        os.makedirs(pred_save_path)
+    # if not os.path.exists(pred_save_path):
+    #     os.makedirs(pred_save_path)
     for d in data_test():
         im = cv2.imread(d["file_name"])
         outputs = predictor(im)
         predictions.append(outputs)
-        v = Visualizer(im[:, :, ::-1],
-                        metadata=MetadataCatalog.get(f'test'), 
-                        scale=0.8,
-        )
-        out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-        plt.imshow(out.get_image()[:, :, ::-1])
-        plt.axis('off')
-        plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
+        # v = Visualizer(im[:, :, ::-1],
+        #                 metadata=MetadataCatalog.get(f'test'), 
+        #                 scale=0.8,
+        # )
+        # out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+        # plt.imshow(out.get_image()[:, :, ::-1])
+        # plt.axis('off')
+        # plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
         # plt.show()
     print('Predictions: ', predictions)
     predictions = np.array(predictions)
