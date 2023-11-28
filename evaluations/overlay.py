@@ -37,7 +37,7 @@ fold = 1
 
 
 
-def make_tensor(annos):
+def make_tensor(annos, image_size=(1024,1024)):
     boxes = []
     classes = []
     for anno in annos:
@@ -45,7 +45,7 @@ def make_tensor(annos):
         classes.append(anno['category_id'])
     boxes = torch.tensor(boxes)
     classes = torch.tensor(classes)
-    return {'instances': Instances((1024,1024)), 'pred_boxes': boxes, 'pred_classes': classes}
+    return {'instances': Instances(image_size), 'pred_boxes': boxes, 'pred_classes': classes}
 
 def train_detectron2(data_path, config_info, max_iters, name, project, fold, version):
     def data_train():
@@ -131,7 +131,8 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
     for d in data_test():
         im = cv2.imread(d["file_name"])
 
-        det = make_tensor(d['annotations'])
+        det = make_tensor(d['annotations'], image_size=(d['height'], d['width']))
+        print(det)
 
         outputs = predictor(im)
         predictions.append(outputs)
@@ -140,7 +141,6 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
                         scale=1,
         )
         # visualising the ground truth
-        print(d)
         out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
         plt.imshow(out.get_image()[:, :, ::-1])
         plt.axis('off')
