@@ -71,6 +71,23 @@ for i in os.listdir(basepath):
                 print('---')
                 cv2.rectangle(image, (gt_boxes[j][0], gt_boxes[j][1]), (gt_boxes[j][2], gt_boxes[j][3]), (0, 255, 0), 2)
                 cv2.rectangle(image, (boxes[k][0], boxes[k][1]), (boxes[k][2], boxes[k][3]), (0, 0, 255), 2)
+                equal_class = gt_classes[j] == classes[k]
+                if equal_class:
+                    conf_matrix[gt_classes[j]][gt_classes[j]] += 1
+                else:
+                    conf_matrix[gt_classes[j]][classes[k]] += 1
+            elif IoU >0 and IoU < thresh_IOU:
+                if gt_classes[j] == classes[k]:
+                    conf_matrix[gt_classes[j]][gt_classes[j]] += 1
+                else:
+                    conf_matrix[gt_classes[j]][classes[k]] += 1
+                pass
+            else:
+                if gt_classes[j] == classes[k]:
+                    conf_matrix[gt_classes[j]][gt_classes[j]] += 1
+                else:
+                    conf_matrix[gt_classes[j]][classes[k]] += 1
+
     # cv2.imshow('image', image)
     # plt.show()
     cv2.imwrite(level_path + f'/{i}_comparison.png', image)
@@ -78,5 +95,6 @@ for i in os.listdir(basepath):
     # cv2.destroyAllWindows()
 
     count += 1
-    # if count == 5:
-    #     break
+    
+    print(conf_matrix)
+    break

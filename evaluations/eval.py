@@ -74,7 +74,16 @@ def run_pred_level():
             # print(classes.shape)
             with open(os.path.join(pred_save_path, f'{d["image_id"]}.txt'), 'w+') as f:
                 for k in range(len(boxes_np)):
-                    f.write(f'{classes[k]} {scores[k]} {boxes_np[k][0]} {boxes_np[k][1]} {boxes_np[k][2]} {boxes_np[k][3]}\n')
+                    x1 = boxes_np[k][0]
+                    y1 = boxes_np[k][1]
+                    x2 = boxes_np[k][2]
+                    y2 = boxes_np[k][3]
+
+                    X = x1
+                    Y = y1
+                    W = x2 - x1
+                    H = y2 - y1
+                    f.write(f'{classes[k]} {scores[k]} {X} {Y} {W} {H}\n')
             i+=1
         
 test_annnot_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/final_test/test.npy'
@@ -121,6 +130,12 @@ for annot in gt:
             ymin = boxes[k][1]
             xmax = boxes[k][2]
             ymax = boxes[k][3] 
-            f.write(f'{classes[k]} {xmin} {ymin} {xmax} {ymax}\n')
+            
+            X = xmin
+            Y = ymin
+            W = xmax - xmin
+            H = ymax - ymin
+
+            f.write(f'{classes[k]} {X} {Y} {W} {H}\n')
 
 run_pred_level()
