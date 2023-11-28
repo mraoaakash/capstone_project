@@ -33,3 +33,8 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4
 cfg.DATASETS.TEST = (f'test',)
 predictor = DefaultPredictor(cfg)
+
+evaluator = COCOEvaluator(f'test', cfg, False, output_dir=f'{MODEL_PATH}/eval')
+val_loader = build_detection_test_loader(cfg, f'test')
+inference_on_dataset(predictor.model, val_loader, evaluator)
+
