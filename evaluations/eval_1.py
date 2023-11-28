@@ -45,6 +45,16 @@ def bb_intersection_over_union(a,b):
     # print(iou)
     return iou
 
+def get_boxes(d):
+    boxes = []
+    classes = []
+    for i in range(len(d['annotations'])):
+        boxes.append(d['annotations'][i]['bbox'])
+        classes.append(d['annotations'][i]['category_id'])
+
+
+    return boxes, classes
+
 basepath = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs'
 gt_overlay_save = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs/evaluations'
 model_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs/faster_rcnn_R_50_C4_3x_fold_1'
@@ -108,7 +118,8 @@ for d in data_test():
     print(scores)
     print(classes)
 
-    gt_boxes = d['annotations']['bbox']
+    gt_boxes, gt_classes = get_boxes(d)
     print(gt_boxes)
-    
+    print(gt_classes)
+
     break
