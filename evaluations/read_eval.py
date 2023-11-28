@@ -1,14 +1,22 @@
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.data import build_detection_test_loader
+from detectron2.utils.visualizer import ColorMode
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2 import model_zoo
+from detectron2.data.catalog import DatasetCatalog, MetadataCatalog
+import numpy as np
+
 import os 
 import pandas as pd
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-data_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds
+data_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds'
 
 def data_test():
-    data = np.load(os.path.join(data_path,"final_test",f'test.npy'), allow_pickle=True)
+    data = np.load(os.path.join(data_path,"final_test", f'test.npy' ), allow_pickle=True))
     data = list(data)
     print(len(data))
     return data
