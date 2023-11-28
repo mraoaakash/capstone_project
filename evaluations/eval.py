@@ -110,6 +110,10 @@ for annot in gt:
     shutil.copy(file_name, os.path.join(ground_truth_img, f'{image_id}.png'))
     with open(os.path.join(ground_truth_annot, f'{image_id}.txt'), 'w+') as f:
         for k in range(len(boxes)):
-            f.write(f'{classes[k]} {boxes[k][0]} {boxes[k][1]} {boxes[k][2]} {boxes[k][3]}\n')
-
+            # making yolo format
+            x_center = (boxes[k][0] + boxes[k][2]/2)/im_width
+            y_center = (boxes[k][1] + boxes[k][3]/2)/im_height
+            width = boxes[k][2]/im_width
+            height = boxes[k][3]/im_height
+            f.write(f'{classes[k]} {x_center} {y_center} {width} {height}\n')
 # run_pred_level()
