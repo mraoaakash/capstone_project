@@ -18,17 +18,25 @@ print(pred)
 # read image
 im = cv2.imread(img_path)
 
-# plot ground truth
+# plt.figure(figsize=(10, 10))
+plt.imshow(im)
+# gt
 for i in range(len(gt)):
-    x1, y1, x2, y2 = gt.loc[i, ['x1', 'y1', 'x2', 'y2']]
+    x1 = gt.iloc[i]['x1']
+    y1 = gt.iloc[i]['y1']
+    x2 = gt.iloc[i]['x2']
+    y2 = gt.iloc[i]['y2']
     cv2.rectangle(im, (x1, y1), (x2, y2), (0, 255, 0), 2)
-    # cv2.putText(im, gt.loc[i, 'class'], (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+# pred
+for i in range(len(pred)):
+    x1 = pred.iloc[i]['x1']
+    y1 = pred.iloc[i]['y1']
+    x2 = pred.iloc[i]['x2']
+    y2 = pred.iloc[i]['y2']
+    cv2.rectangle(im, (x1, y1), (x2, y2), (0, 0, 255), 2)
+plt.imshow(im)
+plt.show()
 
-# # plot prediction
-# for i in range(len(pred)):
-#     x1, y1, x2, y2 = pred.loc[i, ['x1', 'y1', 'x2', 'y2']]
-#     cv2.rectangle(im, (x1, y1), (x2, y2), (0, 255, 0), 2)
-#     # cv2.putText(im, pred.loc[i, 'class'], (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
 # save image
 cv2.imwrite('test.png', im)
