@@ -58,15 +58,17 @@ def run_pred_level():
             print(model)
             im = cv2.imread(d["file_name"])
             boxes = prediction[i]['instances'].pred_boxes
+            height, width = im.shape[:2]
+            pred_height, pred_width = prediction[i]['instances'].image_size
             classes = prediction[i]['instances'].pred_classes.cpu().numpy()
             scores = prediction[i]['instances'].scores.cpu().numpy()
             for j in boxes.__iter__():
                 box = j.cpu().numpy()
                 boxes_np.append(box)
             boxes_np = np.array(boxes_np).astype(np.uint8)
-            print(boxes_np.shape)
-            print(scores.shape)
-            print(classes.shape)
+            # print(boxes_np.shape)
+            # print(scores.shape)
+            # print(classes.shape)
             with open(os.path.join(pred_save_path, f'{d["image_id"]}.txt'), 'w+') as f:
                 for k in range(len(boxes_np)):
                     f.write(f'{classes[k]} {scores[k]} {boxes_np[k][0]} {boxes_np[k][1]} {boxes_np[k][2]} {boxes_np[k][3]}\n')
