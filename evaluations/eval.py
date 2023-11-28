@@ -60,6 +60,8 @@ def run_pred_level():
             boxes = prediction[i]['instances'].pred_boxes
             height, width = im.shape[:2]
             pred_height, pred_width = prediction[i]['instances'].image_size
+            print(height, width)
+            print(pred_height, pred_width)
             classes = prediction[i]['instances'].pred_classes.cpu().numpy()
             scores = prediction[i]['instances'].scores.cpu().numpy()
             for j in boxes.__iter__():
