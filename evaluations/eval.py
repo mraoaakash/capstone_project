@@ -62,7 +62,7 @@ def run_pred_level():
             for j in boxes.__iter__():
                 box = j.cpu().numpy()
                 boxes_np.append(box)
-            boxes_np = np.array(boxes_np)
+            boxes_np = np.array(boxes_np).astype(np.uint8)
             print(boxes_np.shape)
             print(scores.shape)
             print(classes.shape)
@@ -73,11 +73,20 @@ def run_pred_level():
         
 test_annnot_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/final_test/test.npy'
 test_gt_save_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/converted/ground_truth'
+ground_truth_img = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/converted/ground_truth/images'
+ground_truth_annot = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/converted/ground_truth/annotations'
+
+if not os.path.isdir(ground_truth_annot):
+    os.makedirs(ground_truth_annot)
+if not os.path.isdir(ground_truth_img):
+    os.makedirs(ground_truth_img)
+
 if not os.path.exists(test_gt_save_path):
     os.makedirs(test_gt_save_path)
 gt = np.load(test_annnot_path, allow_pickle=True)
 for annot in gt:
     image_id = annot['image_id']
+    file_name = annot['file_name']
     print(image_id)
     annotations = annot['annotations']
     classes = []
@@ -91,13 +100,15 @@ for annot in gt:
         boxes.append(box)
         classes.append(class_id)
         cofidences.append(confidence)
-    boxes = np.array(boxes)
+    boxes = np.array(boxes).astype(np.uint8)
     classes = np.array(classes)
     cofidences = np.array(cofidences)
     print(boxes.shape)
     print(classes.shape)
     print(cofidences.shape)
-    with open(os.path.join(test_gt_save_path, f'{image_id}.txt'), 'w+') as f:
+    shutil.copy(file_name, os.path.join(ground_truth_img, f'{image_id}.png'))
+    with open(os.path.join(ground_truth_annot, f'{image_id}.txt'), 'w+') as f:
         for k in range(len(boxes)):
-            f.write(f'{classes[k]} {cofidences[k]} {boxes[k][0]} {boxes[k][1]} {boxes[k][2]} {boxes[k][3]}\n')
-    break
+            f.write(f'{classes[k]} {boxes[k][0]} {boxes[k][1]} {boxes[k][2]} {boxes[k][3]}\n')
+
+# run_pred_level()
