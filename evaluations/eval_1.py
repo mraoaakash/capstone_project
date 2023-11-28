@@ -88,17 +88,18 @@ def data_test():
 for d in data_test():
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
-    predictions.append(outputs)
-    v = Visualizer(im[:, :, ::-1],
-                    metadata=MetadataCatalog.get(f'test'), 
-                    scale=1.0,
-    )
-    out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    out = v.draw_dataset_dict(d)
+    print(outputs)
+    # predictions.append(outputs)
+    # v = Visualizer(im[:, :, ::-1],
+    #                 metadata=MetadataCatalog.get(f'test'), 
+    #                 scale=1.0,
+    # )
+    # out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    # out = v.draw_dataset_dict(d)
 
-    plt.imshow(out.get_image()[:, :, ::-1])
-    plt.axis('off')
-    plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
-    # plt.show()
+    # plt.imshow(out.get_image()[:, :, ::-1])
+    # plt.axis('off')
+    # plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
+    # # plt.show()
 
-    
+    break
