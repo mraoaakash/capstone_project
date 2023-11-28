@@ -47,7 +47,7 @@ def bb_intersection_over_union(a,b):
 
 basepath = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs'
 gt_overlay_save = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs/evaluations'
-
+model_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs/faster_rcnn_R_50_C4_3x_fold_1'
 model_preds = '{basepath}/faster_rcnn_R_50_C4_1x_fold_1'
 
 
