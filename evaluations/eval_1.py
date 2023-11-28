@@ -99,18 +99,17 @@ for d in data_test():
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
     print(outputs)
-    # predictions.append(outputs)
-    # v = Visualizer(im[:, :, ::-1],
-    #                 metadata=MetadataCatalog.get(f'test'), 
-    #                 scale=1.0,
-    # )
-    # out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    # out = v.draw_dataset_dict(d)
+    predictions.append(outputs)
+    v = Visualizer(im[:, :, ::-1],
+                    metadata=MetadataCatalog.get(f'test'), 
+                    scale=1.0,
+    )
+    out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    out = v.draw_dataset_dict(d)
 
-    # plt.imshow(out.get_image()[:, :, ::-1])
-    # plt.axis('off')
-    # plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
-    # # plt.show()
+    plt.imshow(out.get_image()[:, :, ::-1])
+    plt.axis('off')
+    # plt.show()
     boxes = outputs["instances"].pred_boxes.tensor.cpu().numpy()
     scores = outputs["instances"].scores.cpu().numpy()
     classes = outputs["instances"].pred_classes.cpu().numpy()
@@ -137,7 +136,8 @@ for d in data_test():
     np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_classes.npy'), classes)
     np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_gt_boxes.npy'), gt_boxes)
     np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_gt_classes.npy'), gt_classes)
-    
+    plt.savefig(os.path.join(image_level_save_path,  d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
+
 
 
     break
