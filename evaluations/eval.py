@@ -72,16 +72,32 @@ def run_pred_level():
             i+=1
         
 test_annnot_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/final_test/test.npy'
+test_gt_save_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/converted/ground_truth'
+if not os.path.exists(test_gt_save_path):
+    os.makedirs(test_gt_save_path)
 gt = np.load(test_annnot_path, allow_pickle=True)
 for annot in gt:
     image_id = annot['image_id']
+    print(image_id)
     annotations = annot['annotations']
     classes = []
     cofidences = []
     boxes = []
     for annotation in annotations:
-        print(annotation)
+        # print(annotation)
         class_id = annotation['category_id']
         confidence = 1.0
         box = annotation['bbox']
+        boxes.append(box)
+        classes.append(class_id)
+        cofidences.append(confidence)
+    boxes = np.array(boxes)
+    classes = np.array(classes)
+    cofidences = np.array(cofidences)
+    print(boxes.shape)
+    print(classes.shape)
+    print(cofidences.shape)
+    with open(os.path.join(test_gt_save_path, f'{image_id}.txt'), 'w+') as f:
+        for k in range(len(boxes)):
+            f.write(f'{classes[k]} {cofidences[k]} {boxes[k][0]} {boxes[k][1]} {boxes[k][2]} {boxes[k][3]}\n')
     break
