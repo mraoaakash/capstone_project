@@ -68,7 +68,7 @@ cfg.SOLVER.STEPS = []
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
 cfg.OUTPUT_DIR = os.path.join(gt_overlay_save, f'{name}')
-cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+cfg.MODEL.WEIGHTS = os.path.join(model_path, "model_final.pth")
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   
 cfg.DATASETS.TEST = (f'test',)
 
