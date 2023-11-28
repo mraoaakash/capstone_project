@@ -146,7 +146,7 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
         plt.axis('off')
         plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
         # plt.show()
-        break
+        # break
     print('Predictions: ', predictions)
     predictions = np.array(predictions)
     np.save(os.path.join(cfg.OUTPUT_DIR, 'predictions1.npy'), predictions)
