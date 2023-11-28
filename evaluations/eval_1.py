@@ -46,62 +46,59 @@ def bb_intersection_over_union(a,b):
     return iou
 
 basepath = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs'
+gt_overlay_save = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs/evaluations'
 
 model_preds = '{basepath}/faster_rcnn_R_50_C4_1x_fold_1'
 
 
-images = os.listdir(image_path)
 
-try:
-    images.remove('.DS_Store')
-except:
-    pass
 
-for image in images:
-    model_preds = '{basepath}/faster_rcnn_R_50_C4_3x_fold_3'
-    cfg = get_cfg()
-    cfg.merge_from_file(model_zoo.get_config_file(config_info))
-    cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
-    cfg.DATASETS.TEST = (f'fold_{fold}_val',)
-    cfg.DATALOADER.NUM_WORKERS = 2
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)
-    cfg.MODEL.LOAD_PROPOSALS = False
-    cfg.SOLVER.IMS_PER_BATCH = 8
-    cfg.SOLVER.BASE_LR = 0.00025
-    cfg.SOLVER.STEPS = []        
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
-    cfg.OUTPUT_DIR = os.path.join(gt_overlay_save, f'{name}')
-    cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   
-    cfg.DATASETS.TEST = (f'test',)
 
-    predictor = DefaultPredictor(cfg)
-    predictions = []
-    pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
-    if not os.path.exists(pred_save_path):
-        os.makedirs(pred_save_path)
+model_preds = '{basepath}/faster_rcnn_R_50_C4_3x_fold_3'
+cfg = get_cfg()
+cfg.merge_from_file(model_zoo.get_config_file(config_info))
+cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
+cfg.DATASETS.TEST = (f'fold_{fold}_val',)
+cfg.DATALOADER.NUM_WORKERS = 2
+cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_info)
+cfg.MODEL.LOAD_PROPOSALS = False
+cfg.SOLVER.IMS_PER_BATCH = 8
+cfg.SOLVER.BASE_LR = 0.00025
+cfg.SOLVER.STEPS = []        
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
+cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
+cfg.OUTPUT_DIR = os.path.join(gt_overlay_save, f'{name}')
+cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   
+cfg.DATASETS.TEST = (f'test',)
 
-    data_path = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds'
-    def data_test():
-        data = np.load(os.path.join(data_path,"final_test",f'test.npy'), allow_pickle=True)
-        data = list(data)
-        print(len(data))
-        return data
+predictor = DefaultPredictor(cfg)
+predictions = []
+pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
+if not os.path.exists(pred_save_path):
+    os.makedirs(pred_save_path)
 
-    for d in data_test():
-        im = cv2.imread(d["file_name"])
-        outputs = predictor(im)
-        predictions.append(outputs)
-        v = Visualizer(im[:, :, ::-1],
-                        metadata=MetadataCatalog.get(f'test'), 
-                        scale=0.8,
-        )
-        out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    
-        plt.imshow(out.get_image()[:, :, ::-1])
-        plt.axis('off')
-        plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
-        # plt.show()
+data_path = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds'
+def data_test():
+    data = np.load(os.path.join(data_path,"final_test",f'test.npy'), allow_pickle=True)
+    data = list(data)
+    print(len(data))
+    return data
+
+for d in data_test():
+    im = cv2.imread(d["file_name"])
+    outputs = predictor(im)
+    predictions.append(outputs)
+    v = Visualizer(im[:, :, ::-1],
+                    metadata=MetadataCatalog.get(f'test'), 
+                    scale=1.0,
+    )
+    out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    out = v.draw_dataset_dict(d)
+
+    plt.imshow(out.get_image()[:, :, ::-1])
+    plt.axis('off')
+    plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
+    # plt.show()
 
     
