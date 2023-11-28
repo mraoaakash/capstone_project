@@ -23,6 +23,9 @@ from detectron2.data import MetadataCatalog
 from detectron2.data.catalog import DatasetCatalog
 from detectron2.engine import DefaultTrainer
 
+import torch
+from detectron2.structures import Instances
+
 fold = 1
 
 # data_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/fold_1/'
@@ -32,6 +35,17 @@ fold = 1
 # project = 'capstone-project' 
 # version = '1'
 
+
+
+def make_tensor(annos):
+    boxes = []
+    classes = []
+    for anno in annos:
+        boxes.append(anno['bbox'])
+        classes.append(anno['category_id'])
+    boxes = torch.tensor(boxes)
+    classes = torch.tensor(classes)
+    return {'instances': Instances((1024,1024)), 'pred_boxes': boxes, 'pred_classes': classes}
 
 def train_detectron2(data_path, config_info, max_iters, name, project, fold, version):
     def data_train():
@@ -116,6 +130,9 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
         os.makedirs(pred_save_path)
     for d in data_test():
         im = cv2.imread(d["file_name"])
+
+        det = make_tensor(d['annotations'])
+
         outputs = predictor(im)
         predictions.append(outputs)
         v = Visualizer(im[:, :, ::-1],
