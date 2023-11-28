@@ -110,23 +110,6 @@ for annot in gt:
     shutil.copy(file_name, os.path.join(ground_truth_img, f'{image_id}.png'))
     with open(os.path.join(ground_truth_annot, f'{image_id}.txt'), 'w+') as f:
         for k in range(len(boxes)):
-            x1 = boxes[k][0]
-            y1 = boxes[k][1]
-            x2 = boxes[k][2]
-            y2 = boxes[k][3]
-            # computing the center of the box
-            x_center = (x1 + x2) / 2.0
-            y_center = (y1 + y2) / 2.0
-            # computing the width and height of the box
-            w = x2 - x1
-            h = y2 - y1
-
-            # adjusting the coordinates based on the size of the image
-            x_center = x_center 
-            y_center = y_center 
-            w = w 
-            h = h 
-
-            f.write(f'{classes[k]} {x_center} {y_center} {w} {h}\n')
+            f.write(f'{classes[k]} {boxes[k][0]} {boxes[k][1]} {boxes[k][2]} {boxes[k][3]}\n')
 
 # run_pred_level()
