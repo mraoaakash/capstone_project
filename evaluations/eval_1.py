@@ -122,4 +122,22 @@ for d in data_test():
     print(gt_boxes)
     print(gt_classes)
 
+    boxes = np.array(boxes)
+    scores = np.array(scores)
+    classes = np.array(classes)
+    gt_boxes = np.array(gt_boxes)
+    gt_classes = np.array(gt_classes)
+
+    # saving all the files
+    image_level_save_path = os.path.join(pred_save_path, d['file_name'].split('/')[-1][:-4])
+    if not os.path.exists(image_level_save_path):
+        os.makedirs(image_level_save_path)
+    np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_boxes.npy'), boxes)
+    np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_scores.npy'), scores)
+    np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_classes.npy'), classes)
+    np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_gt_boxes.npy'), gt_boxes)
+    np.save(os.path.join(image_level_save_path, d['file_name'].split('/')[-1][:-4] + '_gt_classes.npy'), gt_classes)
+    
+
+
     break
