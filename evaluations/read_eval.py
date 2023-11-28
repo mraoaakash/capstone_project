@@ -41,6 +41,4 @@ evaluator = COCOEvaluator(f'test', cfg, False, output_dir=f'{MODEL_PATH}/eval')
 val_loader = build_detection_test_loader(cfg, f'test')
 inference_on_dataset(predictor.model, val_loader, evaluator)
 
-# other metrics
-precisions = evaluator._tasks['bbox'].eval.improved_per_class_precision()
-print(precisions)
+# 

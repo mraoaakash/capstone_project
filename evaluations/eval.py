@@ -113,14 +113,8 @@ for annot in gt:
             # making yolo format
             xmin = boxes[k][0]
             ymin = boxes[k][1]
-            xmax = boxes[k][0] + boxes[k][2]
-            ymax = boxes[k][1] + boxes[k][3]
+            xmax = boxes[k][0]
+            ymax = boxes[k][1] 
+            f.write(f'{classes[k]} {xmin} {ymin} {xmax} {ymax}\n')
 
-            x_center = (xmin + xmax) / (2 * im_width)
-            y_center = (ymin + ymax) / (2 * im_height)
-            w = (xmax - xmin) / im_width
-            h = (ymax - ymin) / im_height
-
-            f.write(f'{classes[k]} {x_center} {y_center} {w} {h}\n')
-            
 # run_pred_level()
