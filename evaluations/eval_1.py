@@ -45,13 +45,9 @@ def bb_intersection_over_union(a,b):
     # print(iou)
     return iou
 
-basepath = ''
+basepath = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/outputs'
 
-model_preds = '{basepath}/evaluations/data/faster_rcnn_R_50_C4_1x_fold_1'
-truth_path = '{basepath}/evaluations/data/ground_truth/annotations'
-image_path = '{basepath}/evaluations/data/ground_truth/images'
-
-gt_overlay_save = '{basepath}/evaluations/data/ground_truth/gt_overlay'
+model_preds = '{basepath}/faster_rcnn_R_50_C4_1x_fold_1'
 
 
 images = os.listdir(image_path)
@@ -62,9 +58,7 @@ except:
     pass
 
 for image in images:
-    model_preds = '{basepath}/evaluations/data/faster_rcnn_R_50_C4_3x_fold_3'
-    truth_path = '{basepath}/evaluations/data/ground_truth/annotations'
-    image_path = '{basepath}/evaluations/data/ground_truth/images'
+    model_preds = '{basepath}/faster_rcnn_R_50_C4_3x_fold_3'
     cfg = get_cfg()
     cfg.merge_from_file(model_zoo.get_config_file(config_info))
     cfg.DATASETS.TRAIN = (f'fold_{fold}_train',)
@@ -78,23 +72,17 @@ for image in images:
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 4 
     cfg.OUTPUT_DIR = os.path.join(gt_overlay_save, f'{name}')
-
-
-    # os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
-    # trainer = DefaultTrainer(cfg) 
-    # trainer.resume_or_load(resume=False)
-    # trainer.train()
-
     cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   # set the testing threshold for this model
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   
     cfg.DATASETS.TEST = (f'test',)
+
     predictor = DefaultPredictor(cfg)
     predictions = []
     pred_save_path = os.path.join(cfg.OUTPUT_DIR, 'predictions')
-    # if not os.path.exists(pred_save_path):
-    #     os.makedirs(pred_save_path)
+    if not os.path.exists(pred_save_path):
+        os.makedirs(pred_save_path)
 
-    data_path = f'/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds/fold_{fold}'
+    data_path = '/media/chs.gpu/DATA/hdd/chs.data/research-cancerPathology/capstone_project/object-detection/benchmarking/datasets/NuCLS/folds'
     def data_test():
         data = np.load(os.path.join(data_path,"final_test",f'test.npy'), allow_pickle=True)
         data = list(data)
@@ -110,6 +98,7 @@ for image in images:
                         scale=0.8,
         )
         out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    
         plt.imshow(out.get_image()[:, :, ::-1])
         plt.axis('off')
         plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
