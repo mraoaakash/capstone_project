@@ -141,7 +141,7 @@ def train_detectron2(data_path, config_info, max_iters, name, project, fold, ver
         )
         # visualising the ground truth
         out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-        out = v.draw_instance_predictions(det["instances"].to("cpu"))
+        print(det)
         plt.imshow(out.get_image()[:, :, ::-1])
         plt.axis('off')
         plt.savefig(os.path.join(pred_save_path, d['file_name'].split('/')[-1]), bbox_inches='tight', pad_inches=0, dpi=300)
